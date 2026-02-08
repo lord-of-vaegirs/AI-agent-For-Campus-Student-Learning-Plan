@@ -1,0 +1,24 @@
+[
+  {
+    "course_id": "BCSTMS0022S",
+    "name": "人工智能与Python程序设计",
+    "course_introduction": "本课程介绍人工智能的基本概念和Python编程基础，涵盖机器学习、深度学习等内容，培养学生的编程能力和AI应用开发能力。",
+    "credits": 4,
+    "category": "部类基础课",
+    "standard_semester": 2,
+    "tags": ["编程语言与软件工程"],
+    "assessment": "大作业+笔试",
+    "difficulty": 7.5
+  },
+  {
+    "course_id": "BBSMMSB005",
+    "name": "数学分析III",
+    "course_introduction": "本课程是数学分析系列课程的第三部分，主要内容包括多元函数微积分、重积分、曲线积分和曲面积分等，培养学生的数学分析能力和抽象思维能力。",
+    "credits": 5,
+    "category": "专业核心课",
+    "standard_semester": 3,
+    "tags": ["数学基础"],
+    "assessment": "闭卷考试",
+    "difficulty": 9.8
+  }
+]

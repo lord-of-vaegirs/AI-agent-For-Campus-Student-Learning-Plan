@@ -1,0 +1,12 @@
+[
+  {
+    "comp_id": "C_ACM_01",
+    "name": "国际大学生程序设计竞赛 (ICPC)",
+    "tags": ["算法", "团队"],
+    "description": "全球最具影响力的大学生程序设计竞赛。",
+    "duration": "1学期/届",
+    "potential_awards": ["金奖", "银奖", "铜奖"],
+    "bonus_points_for_grad": 8.0,
+    "required_skills": ["数据结构", "算法设计"]
+  }
+]

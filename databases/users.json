@@ -1,0 +1,31 @@
+{
+  "user_2023_005": {
+    "profile": {
+      "name": "李华",
+      "identity": "senior", 
+      "enrollment_year": 2023, 
+      "major": "计算机",
+      "target": "保研"
+    },
+    "academic_progress": {
+      "current_semester": 3, 
+      "completed_courses": [
+        {"id": "BCSTMS0022S", "grade": 4.0, "semester": 2}
+      ],
+      "research_done": ["R_AI_001"],
+      "competitions_done": ["C_ACM_01"]
+    },
+    "remaining_tasks": {
+      "specific_required_courses": ["BBSMMSB005"],
+      "credit_gaps": [
+        {"category": "个性化选修", "missing_credits": 12}
+      ]
+    },
+    "path_review": {
+      "is_public": true,
+      "content": "...",
+      "citation_count": 128, 
+      "current_rank": 5 
+    }
+  }
+}
