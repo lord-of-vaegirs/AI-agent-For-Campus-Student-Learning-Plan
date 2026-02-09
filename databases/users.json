@@ -1,53 +1,116 @@
 {
   "user_2023000001": {
     "profile": {
-      "name": "李华", 
-      "enrollment_year": 2023, 
-      "school":"信息学院",
-      "major":"计算机科学与技术",
+      "name": "李华",
+      "enrollment_year": 2023,
+      "school": "信息学院",
+      "major": "计算机科学与技术",
       "target": "保研"
     },
     "academic_progress": {
-      "current_semester": 3, 
+      "current_semester": 3,
       "completed_courses": [
-        {"name": "人工智能与Python程序设计", "grade": 4.0, "semester": 2, "category": "部类基础课"}
+        {
+          "name": "人工智能与Python程序设计",
+          "grade": 4.0,
+          "semester": 2,
+          "category": "部类基础课"
+        }
       ],
       "research_done": [
-        {"name":"基于深度学习的图像识别技术研究", "complete_semester":2}
+        {
+          "name": "基于深度学习的图像识别技术研究",
+          "complete_semester": 2
+        }
       ],
       "competitions_done": [
-        {"name":"国际大学生程序设计竞赛 (ICPC)", "award":"银奖", "complete_semester":2}
+        {
+          "name": "国际大学生程序设计竞赛 (ICPC)",
+          "award": "银奖",
+          "complete_semester": 2
+        }
       ]
     },
     "remaining_tasks": {
-      "must_required_courses":[
-        {"name":"数学分析III","semester":3}
+      "must_required_courses": [
+        {
+          "name": "数学分析III",
+          "semester": 3
+        }
       ],
       "credit_gaps": [
-        {"category": "实践课程", "missing_credits": 12},
-        {"category": "模块限选课", "missing_credits": 8},
-        {"category": "个性化任选课", "missing_credits": 3}
+        {
+          "category": "实践课程",
+          "missing_credits": 12
+        },
+        {
+          "category": "模块限选课",
+          "missing_credits": 8
+        },
+        {
+          "category": "个性化任选课",
+          "missing_credits": 3
+        }
       ]
     },
     "path_review": {
       "is_public": true,
       "content": "...",
-      "citation_count": 128, 
-      "current_rank": 5 
+      "citation_count": 128,
+      "current_rank": 5
     },
-    "knowledge":{
-      "数学基础":0,
-      "编程语言、算法与软件工程":0,
-      "计算机系统与网络":0,
-      "数据与智能":0,
-      "网络安全与信息保护":0
+    "knowledge": {
+      "数学基础": 0,
+      "编程语言、算法与软件工程": 0,
+      "计算机系统与网络": 0,
+      "数据与智能": 0,
+      "网络安全与信息保护": 0
     },
-    "skills":{
-      "系统化思维":0,
-      "形式化逻辑与数学迁移":0,
-      "工具化与自动化本能":0,
-      "信息检索与数据处理":0,
-      "异常处理与边界意识":0
+    "skills": {
+      "系统化思维": 0,
+      "形式化逻辑与数学迁移": 0,
+      "工具化与自动化本能": 0,
+      "信息检索与数据处理": 0,
+      "异常处理与边界意识": 0
+    }
+  },
+  "user_2023000002": {
+    "profile": {
+      "name": "test1",
+      "enrollment_year": 2025,
+      "school": "信息学院",
+      "major": "计算机科学与技术",
+      "target": "保研"
+    },
+    "academic_progress": {
+      "current_semester": 1,
+      "completed_courses": [],
+      "research_done": [],
+      "competitions_done": []
+    },
+    "remaining_tasks": {
+      "must_required_courses": [],
+      "credit_gaps": []
+    },
+    "path_review": {
+      "is_public": false,
+      "content": "",
+      "citation_count": 0,
+      "current_rank": 0
+    },
+    "knowledge": {
+      "数学基础": 0,
+      "编程语言、算法与软件工程": 0,
+      "计算机系统与网络": 0,
+      "数据与智能": 0,
+      "网络安全与信息保护": 0
+    },
+    "skills": {
+      "系统化思维": 0,
+      "形式化逻辑与数学迁移": 0,
+      "工具化与自动化本能": 0,
+      "信息检索与数据处理": 0,
+      "异常处理与边界意识": 0
     }
   }
 }
