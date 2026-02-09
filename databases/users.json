@@ -1,30 +1,32 @@
 {
-  "user_2023_005": {
+  "user_2023000001": {
     "profile": {
-      "name": "李华",
-      "identity": "senior", 
+      "name": "李华", 
       "enrollment_year": 2023, 
-      "major": "计算机",
+      "school":"信息学院",
+      "major":"计算机科学与技术",
       "target": "保研"
     },
     "academic_progress": {
       "current_semester": 3, 
       "completed_courses": [
-        {"id": "BCSTMS0022S", "grade": 4.0, "semester": 2, "category": "部类基础课"}
+        {"name": "人工智能与Python程序设计", "grade": 4.0, "semester": 2, "category": "部类基础课"}
       ],
       "research_done": [
-        {"research_id":"R_AI_001", "complete_semester":2}
+        {"name":"基于深度学习的图像识别技术研究", "complete_semester":2}
       ],
       "competitions_done": [
-        {"comp_id":"C_ACM_01", "award":"银奖", "complete_semester":2}
+        {"name":"国际大学生程序设计竞赛 (ICPC)", "award":"银奖", "complete_semester":2}
       ]
     },
     "remaining_tasks": {
       "must_required_courses":[
-        {"id":"BBSMMSB005","semester":3}
+        {"name":"数学分析III","semester":3}
       ],
       "credit_gaps": [
-        {"category": "个性化选修4", "missing_credits": 12}
+        {"category": "实践课程", "missing_credits": 12},
+        {"category": "模块限选课", "missing_credits": 8},
+        {"category": "个性化任选课", "missing_credits": 3}
       ]
     },
     "path_review": {
