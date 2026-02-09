@@ -12,11 +12,17 @@
       "completed_courses": [
         {"id": "BCSTMS0022S", "grade": 4.0, "semester": 2, "category": "部类基础课"}
       ],
-      "research_done": ["R_AI_001"],
-      "competitions_done": ["C_ACM_01"]
+      "research_done": [
+        {"research_id":"R_AI_001", "complete_semester":2}
+      ],
+      "competitions_done": [
+        {"comp_id":"C_ACM_01", "award":"银奖", "complete_semester":2}
+      ]
     },
     "remaining_tasks": {
-      "specific_required_courses": ["BBSMMSB005"],
+      "must_required_courses":[
+        {"id":"BBSMMSB005","semester":3}
+      ],
       "credit_gaps": [
         {"category": "个性化选修4", "missing_credits": 12}
       ]
@@ -38,8 +44,8 @@
       "系统化思维":0,
       "形式化逻辑与数学迁移":0,
       "工具化与自动化本能":0,
-      "信息检索与过滤精度":0,
-      "鲁棒性与边界意识":0
+      "信息检索与数据处理":0,
+      "异常处理与边界意识":0
     }
   }
 }
