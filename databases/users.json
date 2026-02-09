@@ -10,7 +10,7 @@
     "academic_progress": {
       "current_semester": 3, 
       "completed_courses": [
-        {"id": "BCSTMS0022S", "grade": 4.0, "semester": 2}
+        {"id": "BCSTMS0022S", "grade": 4.0, "semester": 2, "category": "部类基础课"}
       ],
       "research_done": ["R_AI_001"],
       "competitions_done": ["C_ACM_01"]
@@ -18,7 +18,7 @@
     "remaining_tasks": {
       "specific_required_courses": ["BBSMMSB005"],
       "credit_gaps": [
-        {"category": "个性化选修", "missing_credits": 12}
+        {"category": "个性化选修4", "missing_credits": 12}
       ]
     },
     "path_review": {
@@ -26,6 +26,21 @@
       "content": "...",
       "citation_count": 128, 
       "current_rank": 5 
+    },
+    "knowledge":{
+      "数学基础":0,
+      "编程语言":0,
+      "算法与软件工程":0,
+      "计算机系统与网络":0,
+      "数据与智能":0,
+      "网络安全与信息保护":0
+    },
+    "skills":{
+      "系统化思维":0,
+      "形式化逻辑与数学迁移":0,
+      "工具化与自动化本能":0,
+      "信息检索与过滤精度":0,
+      "鲁棒性与边界意识":0
     }
   }
 }
