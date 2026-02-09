@@ -1,7 +1,12 @@
 import json
 
-def new_load_required_courses(name):
+def get_mandatory_roadmap(user_id):
     pass
 
-def old_update_required_courses(name, new_courses, new_researches, new_competitions):
+def get_selection_options():
     pass
+
+def update_user_progress(user_id,completed_data):
+    pass
+
+
