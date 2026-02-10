@@ -46,10 +46,6 @@
         {
           "category": "模块限选课",
           "missing_credits": 8
-        },
-        {
-          "category": "个性化任选课",
-          "missing_credits": 3
         }
       ]
     },
