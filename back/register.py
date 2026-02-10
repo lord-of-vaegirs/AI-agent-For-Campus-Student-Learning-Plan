@@ -41,7 +41,9 @@ def register_user(data):
         },
         "remaining_tasks": {"must_required_courses": [], "credit_gaps": []},
         "path_review": {"is_public": False, "content": "", "citation_count": 0, "current_rank": 0},
-        "knowledge": {}, "skills": {}
+        "knowledge": {}, "skills": {},
+        "total_credits": 0.0,
+        "average_grades": 0.0
     }
 
     # 1. 尝试从 tags.json 初始化标签 (假设 tags.json 是个列表)
@@ -185,6 +187,26 @@ def update_user_progress(user_id, payload):
                 for sd, base in info.get("skills", {}).items():
                     if sd in user["skills"]:
                         user["skills"][sd] += round(base * creds * gpa, 2)
+
+        # --- 计算总学分和平均绩点 ---
+        total_credits = 0.0
+        total_grade_points = 0.0
+
+        for c_done in user["academic_progress"]["completed_courses"]:
+            name = c_done["name"]
+            gpa = float(c_done.get("grade", 0))
+            if name in course_lookup:
+                info = course_lookup[name]
+                creds = float(info.get("credits", 0))
+                total_credits += creds
+                total_grade_points += creds * gpa
+
+        # 计算平均绩点
+        average_grades = round(total_grade_points / total_credits, 2) if total_credits > 0 else 0.0
+
+        # 更新用户的总学分和平均绩点
+        user["total_credits"] = total_credits
+        user["average_grades"] = average_grades
 
         # 保存回 JSON
         users_all[user_id] = user
