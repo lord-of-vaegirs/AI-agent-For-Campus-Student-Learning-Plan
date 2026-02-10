@@ -1,242 +1,184 @@
 import json
 import os
 
-# 定义数据库目录（相对于 logic.py 的位置）
+# 定义数据库目录
 DB_DIR = os.path.join(os.path.dirname(__file__), "..", "databases")
 
+def get_db_data(filename):
+    """读取JSON数据，返回原始字典"""
+    path = os.path.join(DB_DIR, filename)
+    if not os.path.exists(path): return {}
+    with open(path, "r", encoding="utf-8") as f:
+        try:
+            return json.load(f)
+        except: return {}
+
 def register_user(data):
-    """
-    接收前端传来的字典，初始化并存入 users.json
-    根据其学院和专业，初始化 must_required_courses 为空列表，等待后续填充。
-    根据其学院和专业，初始化 knowledge 和 skills 字段信息，并赋予零分状态。
-    """
+    """注册用户并初始化结构"""
     db_path = os.path.join(DB_DIR, "users.json")
-    
-    # 1. 生成 ID
     user_id = f"user_{str(data['student_id']).zfill(10)}"
     
-    # 2. 构建完整的初始化结构
-    new_user_entry = {
+    new_user = {
         "profile": {
-            "name": data['name'],
+            "name": data['name'], 
             "enrollment_year": int(data['enrollment_year']),
-            "school": data['school'],
-            "major": data['major'],
+            "school": data['school'], 
+            "major": data['major'], 
             "target": data['target']
         },
         "academic_progress": {
             "current_semester": int(data['current_semester']),
-            "completed_courses": [],
-            "research_done": [],
-            "competitions_done": []
+            "completed_courses": [], "research_done": [], "competitions_done": []
         },
-        "remaining_tasks": {
-            "must_required_courses": [],
-            "credit_gaps": []
-        },
+        "remaining_tasks": {"must_required_courses": [], "credit_gaps": []},
         "path_review": {"is_public": False, "content": "", "citation_count": 0, "current_rank": 0},
-        "knowledge": { k: 0 for k in ["数学基础", "编程语言、算法与软件工程", "计算机系统与网络", "数据与智能", "网络安全与信息保护"] },
-        "skills": { s: 0 for s in ["系统化思维", "形式化逻辑与数学迁移", "工具化与自动化本能", "信息检索与数据处理", "异常处理与边界意识"] }
+        "knowledge": {}, "skills": {}
     }
 
-    # 根据学院和专业动态生成 knowledge 和 skills 标签
-    knowledge_tags = []
-    skills_tags = []
-
-    # 定义文件路径
-    tags_path = os.path.join(DB_DIR, "tags.json")
-
-    # 读取 tags.json
-    with open(tags_path, "r", encoding="utf-8") as f:
-        tags_data = json.load(f)
-
-    # 根据学院和专业筛选标签
-    for tag in tags_data:
-        for college in tag["学院列表"]:
-            if college["学院名称"] == data["school"]:
-                major_tags = college["专业列表"].get(data["major"], [])
-                if tag["tag"] == "knowledge":
-                    knowledge_tags = {k: 0 for k in major_tags}
-                elif tag["tag"] == "skills":
-                    skills_tags = {s: 0 for s in major_tags}
-
-    # 更新 new_user_entry
-    new_user_entry["knowledge"] = knowledge_tags
-    new_user_entry["skills"] = skills_tags
+    # 1. 尝试从 tags.json 初始化标签 (假设 tags.json 是个列表)
+    tags_all = get_db_data("tags.json")
+    if isinstance(tags_all, list):
+        for item in tags_all:
+            for college in item.get("学院列表", []):
+                if college.get("学院名称") == data["school"]:
+                    major_tags = college.get("专业列表", {}).get(data["major"], [])
+                    tag_key = item.get("tag") # knowledge 或 skills
+                    if tag_key in new_user:
+                        new_user[tag_key] = {t: 0.0 for t in major_tags}
 
     try:
-        # 3. 读取并写入
-        if os.path.exists(db_path):
-            with open(db_path, "r", encoding="utf-8") as f:
-                db_data = json.load(f)
-        else:
-            db_data = {}
-
-        # 如果需要查重，A 同学可以在这里加：
-        if user_id in db_data: return False, "学号已注册"
-
-        db_data[user_id] = new_user_entry
+        users = get_db_data("users.json")
+        if not isinstance(users, dict): users = {}
+        if user_id in users: return False, "学号已注册"
         
+        users[user_id] = new_user
         with open(db_path, "w", encoding="utf-8") as f:
-            json.dump(db_data, f, ensure_ascii=False, indent=2)
-            
+            json.dump(users, f, ensure_ascii=False, indent=2)
         return True, user_id
     except Exception as e:
         return False, str(e)
 
 def get_mandatory_roadmap(user_id):
-    """
-    任务：
-    1. 读取 users.json，找到 user_id 对应的 major。
-    2. 读取 courses.json，筛选该专业的必修课。
-    3. 将结果写回 users.json 的 must_required_courses 字段。
-    4. 返回列表: [{"name": "数分I", "semester": 1, "credits": 5}, ...]
-    """
-    # 定义文件路径
-    users_path = os.path.join(DB_DIR, "users.json")
-    courses_path = os.path.join(DB_DIR, "courses.json")
-
-    try:
-        # 读取 users.json
-        with open(users_path, "r", encoding="utf-8") as f:
-            users_data = json.load(f)
-
-        if user_id not in users_data:
-            raise ValueError("用户ID不存在")
-
-        # 获取用户的专业
-        user_major = users_data[user_id]["profile"]["major"]
-
-        # 读取 courses.json
-        with open(courses_path, "r", encoding="utf-8") as f:
-            courses_data = json.load(f)
-
-        # 筛选该专业的必修课
-        mandatory_courses = []
-        for college in courses_data["学院列表"]:
-            for major in college["专业列表"]:
-                if major["专业名称"] == user_major:
-                    for course in major["课程列表"]:
-                        mandatory_courses.append({
+    """根据专业获取必修课表"""
+    users = get_db_data("users.json")
+    user = users.get(user_id)
+    if not user: return []
+    
+    target_school = user["profile"]["school"]
+    target_major = user["profile"]["major"]
+    
+    courses_data = get_db_data("courses.json")
+    roadmap = []
+    
+    # 正确遍历你提供的字典嵌套结构
+    for college in courses_data.get("学院列表", []):
+        if college.get("学院名称") == target_school:
+            for major in college.get("专业列表", []):
+                if major.get("专业名称") == target_major:
+                    for course in major.get("课程列表", []):
+                        # 将必修课提取到规划中
+                        roadmap.append({
                             "name": course["name"],
-                            "semester": course["standard_semester"],
-                            "credits": course["credits"]
+                            "semester": course.get("standard_semester", 1),
+                            "credits": course.get("credits", 0)
                         })
-
-        # 按学期排序
-        mandatory_courses.sort(key=lambda x: x["semester"])
-
-        # 写回 users.json 的 must_required_courses 字段
-        users_data[user_id]["remaining_tasks"]["must_required_courses"] = mandatory_courses
-        with open(users_path, "w", encoding="utf-8") as f:
-            json.dump(users_data, f, ensure_ascii=False, indent=2)
-
-        # 返回结果
-        return mandatory_courses
-
-    except Exception as e:
-        print(f"Error: {e}")
-        return []
-
-def get_db_data(filename):
-    path = os.path.join(DB_DIR, filename)
-    if not os.path.exists(path): return {}
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+    
+    roadmap.sort(key=lambda x: x["semester"])
+    # 同步回用户数据库
+    user["remaining_tasks"]["must_required_courses"] = roadmap
+    users[user_id] = user
+    with open(os.path.join(DB_DIR, "users.json"), "w", encoding="utf-8") as f:
+        json.dump(users, f, ensure_ascii=False, indent=2)
+        
+    return roadmap
 
 def get_selection_options(user_id):
-    users_data = get_db_data("users.json")
-    user = users_data.get(user_id)
-    if not user: return {"courses": [], "research": [], "contests": {}, "contest_list": []}
+    """获取该专业下可选的课程、科研和竞赛"""
+    users = get_db_data("users.json")
+    user = users.get(user_id)
+    if not user: return {"courses": [], "research": [], "contest_list": [], "contest_awards": {}}
     
     school = user["profile"]["school"]
     major_name = user["profile"]["major"]
+    res = {"courses": [], "research": [], "contest_list": [], "contest_awards": {}}
     
-    # 结果容器：contest_awards 存名称到奖项的映射
-    res = {"courses": [], "research": [], "contest_awards": {}, "contest_list": []}
-    
-    # 1. 获取课程
-    courses_data = get_db_data("courses.json")
-    for college in courses_data.get("学院列表", []):
-        if college["学院名称"] == school:
-            for major in college.get("专业列表", []):
-                if major["专业名称"] == major_name:
-                    res["courses"] = [c["name"] for c in major.get("课程列表", [])]
+    # 1. 提取课程
+    c_data = get_db_data("courses.json")
+    for college in c_data.get("学院列表", []):
+        if college.get("学院名称") == school:
+            for m in college.get("专业列表", []):
+                if m.get("专业名称") == major_name:
+                    res["courses"] = [c["name"] for c in m.get("课程列表", [])]
 
-    # 2. 获取科研
-    research_data = get_db_data("research.json")
-    for college in research_data.get("学院列表", []):
-        if college["学院名称"] == school:
-            for major in college.get("专业列表", []):
-                if major["专业名称"] == major_name:
-                    res["research"] = [r["name"] for r in major.get("科研列表", [])]
+    # 2. 提取科研
+    r_data = get_db_data("research.json")
+    for college in r_data.get("学院列表", []):
+        if college.get("学院名称") == school:
+            for m in college.get("专业列表", []):
+                if m.get("专业名称") == major_name:
+                    res["research"] = [r["name"] for r in m.get("科研列表", [])]
 
-    # 3. 获取竞赛及其奖项
-    contests_data = get_db_data("contests.json")
-    for college in contests_data.get("学院列表", []):
-        if college["学院名称"] == school:
-            for major in college.get("专业列表", []):
-                if major["专业名称"] == major_name:
-                    for ct in major.get("竞赛列表", []):
-                        name = ct["name"]
-                        res["contest_list"].append(name)
-                        # 将奖项列表存入字典，供前端查询
-                        res["contest_awards"][name] = ct.get("potential_awards", ["参与奖"])
-            
+    # 3. 提取竞赛
+    ct_data = get_db_data("contests.json")
+    for college in ct_data.get("学院列表", []):
+        if college.get("学院名称") == school:
+            for m in college.get("专业列表", []):
+                if m.get("专业名称") == major_name:
+                    for ct in m.get("竞赛列表", []):
+                        res["contest_list"].append(ct["name"])
+                        res["contest_awards"][ct["name"]] = ct.get("potential_awards", ["参与奖"])
     return res
 
-def update_user_progress(user_id, completed_payload):
-    """
-    修正核心逻辑：此时 completed_payload['courses'] 里面是字典列表
-    """
-    users_data = get_db_data("users.json")
-    user = users_data.get(user_id)
+def update_user_progress(user_id, payload):
+    """更新进度并计算得分"""
+    users = get_db_data("users.json")
+    user = users.get(user_id)
     if not user: return False
 
     try:
-        # 更新数据库
-        user["academic_progress"]["completed_courses"] = completed_payload["courses"]
-        user["academic_progress"]["research_done"] = completed_payload["research"]
-        user["academic_progress"]["competitions_done"] = completed_payload["competitions"]
+        user["academic_progress"]["completed_courses"] = payload["courses"]
+        user["academic_progress"]["research_done"] = payload["research"]
+        user["academic_progress"]["competitions_done"] = payload["competitions"]
 
-        # 计算学分与技能累加（需要查找课程详情）
-        courses_data = get_db_data("courses.json")
+        # 扁平化课程信息用于计算
         course_lookup = {}
-        for college in courses_data.get("学院列表", []):
-            for major in college.get("专业列表", []):
-                for c in major.get("课程列表", []):
+        c_all = get_db_data("courses.json")
+        for col in c_all.get("学院列表", []):
+            for m in col.get("专业列表", []):
+                for c in m.get("课程列表", []):
                     course_lookup[c["name"]] = c
 
-        total_credits = 0
-        # 重置当前分数
-        for k in user["knowledge"]: user["knowledge"][k] = 0
-        for s in user["skills"]: user["skills"][s] = 0
+        # 重置并重新计算
+        for k in user["knowledge"]: user["knowledge"][k] = 0.0
+        for s in user["skills"]: user["skills"][s] = 0.0
+        total_creds = 0.0
 
-        # 处理课程带来的增益
-        for c_done in completed_payload["courses"]:
-            c_name = c_done["name"]
-            if c_name in course_lookup:
-                info = course_lookup[c_name]
-                total_credits += info.get("credits", 0)
-                # 累加知识点
-                for k_tag, val in info.get("knowledge", {}).items():
-                    if k_tag in user["knowledge"]:
-                        user["knowledge"][k_tag] += val
-                # 累加技能（如果有）
-                for s_tag, val in info.get("skills", {}).items():
-                    if s_tag in user["skills"]:
-                        user["skills"][s_tag] += val
+        for c_done in payload["courses"]:
+            name = c_done["name"]
+            gpa = float(c_done.get("grade", 0))
+            if name in course_lookup:
+                info = course_lookup[name]
+                creds = float(info.get("credits", 0))
+                total_creds += creds
+                
+                # 累加 Knowledge
+                for kd, base in info.get("knowledge", {}).items():
+                    if kd in user["knowledge"]:
+                        user["knowledge"][kd] += round(base * creds * gpa, 2)
+                # 累加 Skills
+                for sd, base in info.get("skills", {}).items():
+                    if sd in user["skills"]:
+                        user["skills"][sd] += round(base * creds * gpa, 2)
 
-        # 更新学分缺口
         user["remaining_tasks"]["credit_gaps"] = [
-            {"category": "总学分完成情况", "missing_credits": max(0, 155 - total_credits)}
+            {"category": "已修学分", "val": total_creds},
+            {"category": "毕业缺口", "val": max(0, 155 - total_creds)}
         ]
 
-        users_data[user_id] = user
+        users[user_id] = user
         with open(os.path.join(DB_DIR, "users.json"), "w", encoding="utf-8") as f:
-            json.dump(users_data, f, ensure_ascii=False, indent=2)
+            json.dump(users, f, ensure_ascii=False, indent=2)
         return True
     except Exception as e:
         print(f"Update Error: {e}")
         return False
-
