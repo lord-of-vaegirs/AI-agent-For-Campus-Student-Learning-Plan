@@ -7,6 +7,8 @@ DB_DIR = os.path.join(os.path.dirname(__file__), "..", "databases")
 def register_user(data):
     """
     接收前端传来的字典，初始化并存入 users.json
+    根据其学院和专业，初始化 must_required_courses 为空列表，等待后续填充。
+    根据其学院和专业，初始化 knowledge 和 skills 字段信息，并赋予零分状态。
     """
     db_path = os.path.join(DB_DIR, "users.json")
     
@@ -36,6 +38,31 @@ def register_user(data):
         "knowledge": { k: 0 for k in ["数学基础", "编程语言、算法与软件工程", "计算机系统与网络", "数据与智能", "网络安全与信息保护"] },
         "skills": { s: 0 for s in ["系统化思维", "形式化逻辑与数学迁移", "工具化与自动化本能", "信息检索与数据处理", "异常处理与边界意识"] }
     }
+
+    # 根据学院和专业动态生成 knowledge 和 skills 标签
+    knowledge_tags = []
+    skills_tags = []
+
+    # 定义文件路径
+    tags_path = os.path.join(DB_DIR, "tags.json")
+
+    # 读取 tags.json
+    with open(tags_path, "r", encoding="utf-8") as f:
+        tags_data = json.load(f)
+
+    # 根据学院和专业筛选标签
+    for tag in tags_data:
+        for college in tag["学院列表"]:
+            if college["学院名称"] == data["school"]:
+                major_tags = college["专业列表"].get(data["major"], [])
+                if tag["tag"] == "knowledge":
+                    knowledge_tags = {k: 0 for k in major_tags}
+                elif tag["tag"] == "skills":
+                    skills_tags = {s: 0 for s in major_tags}
+
+    # 更新 new_user_entry
+    new_user_entry["knowledge"] = knowledge_tags
+    new_user_entry["skills"] = skills_tags
 
     try:
         # 3. 读取并写入
