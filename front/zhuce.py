@@ -2,11 +2,18 @@ import streamlit as st
 import sys
 import os
 
-# --- 🚩 后端函数接入点 ---
-# 建议新建一个 register.py 文件放在同级目录，让同学 A 在里面写这四个函数
-# 如果 register.py 还没写好，下面的 try-except 会保证你的前端能运行演示
-sys.path.append(os.path.join(os.path.dirname(__file__), "../back"))
+# --- 1. 修复路径导入逻辑 ---
+# 获取当前文件的绝对路径
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# 定位到项目的根目录 (back 和 front 的父目录)
+project_root = os.path.abspath(os.path.join(current_dir, ".."))
+# 将 back 文件夹加入系统路径
+back_path = os.path.join(project_root, "back")
 
+if back_path not in sys.path:
+    sys.path.append(back_path)
+
+# 尝试导入后端函数
 try:
     from register import (
         register_user, 
@@ -14,18 +21,18 @@ try:
         get_selection_options, 
         update_user_progress
     )
-except ImportError:
-    st.error("⚠️ 未找到 register.py。请确保后端同学已创建该文件。目前使用模拟逻辑运行。")
-    # 模拟逻辑，防止代码崩溃
-    def register_user(data): return True, f"user_{str(data['student_id']).zfill(10)}"
+except ImportError as e:
+    st.error(f"⚠️ 导入后端逻辑失败: {e}")
+    # 备用模拟逻辑（防止页面完全崩溃）
+    def register_user(data): return True, "user_0000000000"
     def get_mandatory_roadmap(uid): return []
-    def get_selection_options(): return {"courses":[], "research":[], "contests":[]}
-    def update_user_progress(uid, data): return True
+    def get_selection_options(uid): return {"courses":[], "research":[], "contests":[]}
+    def update_user_progress(uid, data): return False
 
-# --- 页面配置 ---
+# --- 2. 页面配置 ---
 st.set_page_config(page_title="智航 - AI 学业导航系统", layout="wide")
 
-# --- 初始化 Session State ---
+# 初始化 Session State
 if 'step' not in st.session_state:
     st.session_state.step = "registration"
 if 'user_id' not in st.session_state:
@@ -33,7 +40,7 @@ if 'user_id' not in st.session_state:
 if 'user_info' not in st.session_state:
     st.session_state.user_info = {}
 
-# --- 1. 注册页面 ---
+# --- 3. 页面逻辑：注册 ---
 if st.session_state.step == "registration":
     st.title("🚀 智航 - 开启您的 AI 学业个人导航")
     st.subheader("请填写基本信息以初始化您的学业画像")
@@ -58,34 +65,33 @@ if st.session_state.step == "registration":
                     "name": name, "student_id": student_id, "enrollment_year": enrollment_year,
                     "school": school, "major": major, "target": target, "current_semester": current_semester
                 }
-                # 🚩 调用后端逻辑：注册并初始化 JSON
+                # 调用后端逻辑
                 success, result = register_user(user_data)
                 
                 if success:
-                    st.session_state.user_id = result # 保存返回的 user_xxxxxxxxxx
+                    st.session_state.user_id = result 
                     st.session_state.user_info = user_data
                     st.success(f"注册成功！您的 ID 为: {result}")
                     
-                    # 根据学期决定下一步
                     if current_semester == 1:
                         st.session_state.step = "new_student_map"
                     else:
                         st.session_state.step = "input_history"
                     st.rerun()
+                else:
+                    st.error(f"注册失败: {result}")
             else:
                 st.error("请完整填写必填信息 (*)")
 
-# --- 2. 新生模式：必修课程地图 ---
+# --- 4. 页面逻辑：新生必修地图 ---
 elif st.session_state.step == "new_student_map":
     st.title(f"📍 必修课程地图 - {st.session_state.user_info['name']}")
     st.info(f"系统已根据您的专业生成全学期必修课时间轴。")
 
-    # 🚩 调用后端逻辑：获取必修课列表
-    # 后端 A 同学需要实现：根据 user_id 查专业，从课程库提取必修课并存入用户数据库
     roadmap = get_mandatory_roadmap(st.session_state.user_id)
 
     if roadmap:
-        # 这里你可以发挥前端功力，用卡片形式展示课程
+        # 按学期分组显示
         for sem in range(1, 9):
             sem_courses = [c for c in roadmap if c['semester'] == sem]
             if sem_courses:
@@ -93,41 +99,71 @@ elif st.session_state.step == "new_student_map":
                 cols = st.columns(len(sem_courses))
                 for i, course in enumerate(sem_courses):
                     with cols[i]:
-                        st.success(f"**{course['name']}**")
+                        st.success(f"**{course['name']}**\n\n({course['credits']} 学分)")
     else:
-        st.write("⏳ 正在由 AI 解析培养方案中，请稍后刷新...")
+        st.warning("未找到必修课程数据，请检查课程数据库。")
 
-    if st.button("进入个人仪表盘"):
-        # st.session_state.step = "dashboard"
-        # st.rerun()
-        pass
+    if st.button("下一步：进入个人仪表盘"):
+        st.info("仪表盘功能开发中...")
 
-# --- 3. 老生模式：录入已完成历史 ---
+# --- 5. 页面逻辑：老生录入历史 ---
 elif st.session_state.step == "input_history":
     st.title(f"🔍 欢迎回来，{st.session_state.user_info['name']}！")
-    st.info(f"请录入您在大一至当前学期间完成的内容，以便 AI 为您精准规划。")
+    
+    # 获取包含奖项信息的选项
+    all_options = get_selection_options(st.session_state.user_id)
+    
+    with st.container():
+        st.write("### 1. 课程记录")
+        sel_courses = st.multiselect("已修读课程", options=all_options['courses'])
+        course_data = []
+        for name in sel_courses:
+            c1, c2, c3 = st.columns([2,1,1])
+            with c1: st.write(f"**{name}**")
+            with c2: grade = st.number_input("绩点", 0.0, 4.0, 4.0, 0.1, key=f"g_{name}")
+            with c3: sem = st.number_input("学期", 1, 8, 1, key=f"s_{name}")
+            course_data.append({"name": name, "grade": grade, "semester": sem, "category": "必修/选修"})
 
-    # 🚩 调用后端逻辑：获取下拉框选项
-    # 后端 A 同学需要实现：从 courses.json, research.json, contests.json 提取所有名字
-    options = get_selection_options()
-
-    with st.form("history_input_form"):
-        st.write("##### 1. 已完成课程")
-        done_courses = st.multiselect("请选择已修课程", options=options.get('courses', []))
-        
         st.divider()
-        st.write("##### 2. 已参与科研 & 竞赛")
-        done_research = st.multiselect("已参与科研", options=options.get('research', []))
-        done_contests = st.multiselect("已参加竞赛", options=options.get('contests', []))
+        st.write("### 2. 科研经历")
+        sel_res = st.multiselect("参与科研", options=all_options['research'])
+        res_data = []
+        for rname in sel_res:
+            c1, c2 = st.columns([3,1])
+            with c1: st.write(rname)
+            with c2: r_sem = st.number_input("完成学期", 1, 8, 1, key=f"rs_{rname}")
+            res_data.append({"name": rname, "complete_semester": r_sem})
 
-        if st.form_submit_button("提交历史数据"):
-            history_payload = {
-                "courses": done_courses,
-                "research": done_research,
-                "contests": done_contests
-            }
-            # 🚩 调用后端逻辑：提交并计算技能树
-            if update_user_progress(st.session_state.user_id, history_payload):
-                st.success("数据已同步，正在为您点亮技能树...")
-                # st.session_state.step = "dashboard"
-                # st.rerun()
+        st.divider()
+        st.write("### 3. 竞赛获奖")
+        # 使用返回的 contest_list 作为可选项
+        sel_con = st.multiselect("参加竞赛", options=all_options.get('contest_list', []))
+        con_data = []
+        
+        # 获取后端传来的奖项字典
+        award_map = all_options.get('contest_awards', {})
+        
+        for cname in sel_con:
+            c1, c2, c3 = st.columns([2,1,1])
+            with c1: st.write(cname)
+            with c2: 
+                # 动态获取当前竞赛对应的奖项列表，如果没有则默认参与奖
+                current_awards = award_map.get(cname, ["参与奖"])
+                award = st.selectbox("获得奖项", options=current_awards, key=f"ca_{cname}")
+            with c3: 
+                con_sem = st.number_input("获奖学期", 1, 8, 1, key=f"cs_{cname}")
+            con_data.append({"name": cname, "award": award, "complete_semester": con_sem})
+
+    if st.form_submit_button("提交并生成学业画像") if 'form' in locals() else st.button("提交并生成学业画像", type="primary"):
+        payload = {
+            "courses": course_data,
+            "research": res_data,
+            "competitions": con_data
+        }
+        if update_user_progress(st.session_state.user_id, payload):
+            st.success("更新成功！")
+        else:
+            st.error("数据更新失败，请检查后端 Python 终端报错信息。")
+    if st.button("返回"):
+        st.session_state.step = "registration"
+        st.rerun()
