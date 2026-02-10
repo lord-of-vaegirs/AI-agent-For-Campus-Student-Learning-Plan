@@ -50,7 +50,7 @@ if st.session_state.step == "login":
             st.session_state.step = "registration"
             st.rerun()
 
-# --- 4. 注册页面 (修复 col2 和 Submit Button 报错) ---
+# --- 4. 注册页面 ---
 elif st.session_state.step == "registration":
     st.title("📝 用户注册")
     with st.form("registration_form_main"):
@@ -65,8 +65,6 @@ elif st.session_state.step == "registration":
             target = st.selectbox("最终目标", ["保研", "出国深造", "本科就业", "考研"])
         
         sem = st.slider("当前所处学期", 1, 8, 1)
-        
-        # 必须有的提交按钮
         submit_reg = st.form_submit_button("完成注册并进入系统", type="primary")
         
         if submit_reg:
@@ -87,12 +85,12 @@ elif st.session_state.step == "registration":
 
 # --- 5. 系统核心主页面 (Dashboard) ---
 elif st.session_state.step == "dashboard":
-    # --- 修复核心：在渲染组件前执行重置逻辑 ---
+    # 状态重置检查
     if st.session_state.needs_reset:
         st.session_state["ms_c"] = []
         st.session_state["ms_ct"] = []
         st.session_state["ms_r"] = []
-        st.session_state.needs_reset = False # 重置完立即关闭信号
+        st.session_state.needs_reset = False
 
     all_users = get_db_data("users.json")
     user = all_users.get(st.session_state.user_id)
@@ -100,8 +98,26 @@ elif st.session_state.step == "dashboard":
     if not user:
         st.session_state.step = "login"; st.rerun()
 
+    # --- 头部展示区：姓名、学分与平均绩点 ---
     st.title(f"📊 智航看板 - 欢迎您，{user['profile']['name']}")
     
+    # 🌟 新增：汇总统计卡片
+    col_stat1, col_stat2, col_stat3, col_stat4 = st.columns(4)
+    with col_stat1:
+        # 获取后端计算好的总学分
+        tc = user.get("total_credits", 0.0)
+        st.metric("已修总学分", f"{tc} pts", help="当前所有已录入课程的学分总和")
+    with col_stat2:
+        # 获取后端计算好的平均绩点
+        avg_g = user.get("average_grades", 0.0)
+        st.metric("平均加权绩点 (GPA)", f"{avg_g:.2f}", help="计算公式: Σ(课程绩点 * 课程学分) / 总学分")
+    with col_stat3:
+        st.metric("当前学期", f"第 {user['academic_progress']['current_semester']} 学期")
+    with col_stat4:
+        st.metric("规划目标", user['profile']['target'])
+
+    st.divider()
+
     with st.sidebar:
         st.header("功能中心")
         if st.button("🤖 AI 规划建议", use_container_width=True, type="primary"):
@@ -116,14 +132,11 @@ elif st.session_state.step == "dashboard":
     with tab_input:
         st.subheader("记录本学期新成就")
         opts = get_selection_options(st.session_state.user_id)
-        
         history = user.get('academic_progress', {})
-        # 预加载已有的列表，用于查重
         existing_c = {item['name'] for item in history.get('completed_courses', [])}
         existing_ct = {item['name'] for item in history.get('competitions_done', [])}
         existing_r = {item['name'] for item in history.get('research_done', [])}
 
-        # 1. 课程录入
         st.write("#### 📘 新增课程修读")
         sel_c = st.multiselect("搜索并选择完成的课程", options=opts.get('courses', []), key="ms_c")
         course_new = []
@@ -138,8 +151,6 @@ elif st.session_state.step == "dashboard":
             course_new.append({"name": n, "grade": g, "semester": s, "category": "已修"})
 
         st.divider()
-
-        # 2. 竞赛录入
         st.write("#### 🏆 新增竞赛获奖")
         sel_ct = st.multiselect("搜索并选择参加的竞赛", options=opts.get('contest_list', []), key="ms_ct")
         contest_new = []
@@ -155,8 +166,6 @@ elif st.session_state.step == "dashboard":
             contest_new.append({"name": n, "award": a, "complete_semester": cs})
 
         st.divider()
-
-        # 3. 科研录入
         st.write("#### 🧪 新增科研项目")
         sel_r = st.multiselect("搜索并选择参与的科研", options=opts.get('research', []), key="ms_r")
         research_new = []
@@ -178,19 +187,21 @@ elif st.session_state.step == "dashboard":
                     "research": history.get('research_done', []) + research_new,
                     "competitions": history.get('competitions_done', []) + contest_new
                 }
+                # 这里的 update_user_progress 后端已经会更新 GPA 和学分
                 if update_user_progress(st.session_state.user_id, final_payload):
-                    # --- 发射重置信号并刷新 ---
                     st.session_state.needs_reset = True
-                    st.success("🎉 数据更新成功！")
+                    st.success("🎉 数据更新成功！学分与平均绩点已实时计算。")
                     st.rerun()
 
-    # --- TAB 2 & 3: 可视化 (略, 保持之前版本) ---
+    # --- TAB 2 & 3: 可视化 ---
     with tab_tree:
+        st.subheader("🌲 知识维度积累")
         k_data = user.get('knowledge', {})
         if k_data:
             df_k = pd.DataFrame({"维度": list(k_data.keys()), "分值": list(k_data.values())})
             st.bar_chart(df_k, x="维度", y="分值", color="#2ecc71")
     with tab_radar:
+        st.subheader("🕸️ 核心能力模型")
         s_data = user.get('skills', {})
         if s_data:
             categories = list(s_data.keys())
