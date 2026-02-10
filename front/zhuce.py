@@ -1,18 +1,21 @@
 import streamlit as st
+import sys
 import os
 
 # --- 🚩 后端函数接入点 ---
-# 建议新建一个 logic.py 文件放在同级目录，让同学 A 在里面写这四个函数
-# 如果 logic.py 还没写好，下面的 try-except 会保证你的前端能运行演示
+# 建议新建一个 register.py 文件放在同级目录，让同学 A 在里面写这四个函数
+# 如果 register.py 还没写好，下面的 try-except 会保证你的前端能运行演示
+sys.path.append(os.path.join(os.path.dirname(__file__), "../back"))
+
 try:
-    from logic import (
+    from register import (
         register_user, 
         get_mandatory_roadmap, 
         get_selection_options, 
         update_user_progress
     )
 except ImportError:
-    st.error("⚠️ 未找到 logic.py。请确保后端同学已创建该文件。目前使用模拟逻辑运行。")
+    st.error("⚠️ 未找到 register.py。请确保后端同学已创建该文件。目前使用模拟逻辑运行。")
     # 模拟逻辑，防止代码崩溃
     def register_user(data): return True, f"user_{str(data['student_id']).zfill(10)}"
     def get_mandatory_roadmap(uid): return []

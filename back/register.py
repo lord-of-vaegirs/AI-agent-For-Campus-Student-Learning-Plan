@@ -46,7 +46,7 @@ def register_user(data):
             db_data = {}
 
         # 如果需要查重，A 同学可以在这里加：
-        # if user_id in db_data: return False, "学号已注册"
+        if user_id in db_data: return False, "学号已注册"
 
         db_data[user_id] = new_user_entry
         
@@ -65,15 +65,115 @@ def get_mandatory_roadmap(user_id):
     3. 将结果写回 users.json 的 must_required_courses 字段。
     4. 返回列表: [{"name": "数分I", "semester": 1, "credits": 5}, ...]
     """
-    return [] # 待填充
+    # 定义文件路径
+    users_path = os.path.join(DB_DIR, "users.json")
+    courses_path = os.path.join(DB_DIR, "courses.json")
 
-def get_selection_options():
+    try:
+        # 读取 users.json
+        with open(users_path, "r", encoding="utf-8") as f:
+            users_data = json.load(f)
+
+        if user_id not in users_data:
+            raise ValueError("用户ID不存在")
+
+        # 获取用户的专业
+        user_major = users_data[user_id]["profile"]["major"]
+
+        # 读取 courses.json
+        with open(courses_path, "r", encoding="utf-8") as f:
+            courses_data = json.load(f)
+
+        # 筛选该专业的必修课
+        mandatory_courses = []
+        for college in courses_data["学院列表"]:
+            for major in college["专业列表"]:
+                if major["专业名称"] == user_major:
+                    for course in major["课程列表"]:
+                        mandatory_courses.append({
+                            "name": course["name"],
+                            "semester": course["standard_semester"],
+                            "credits": course["credits"]
+                        })
+
+        # 按学期排序
+        mandatory_courses.sort(key=lambda x: x["semester"])
+
+        # 写回 users.json 的 must_required_courses 字段
+        users_data[user_id]["remaining_tasks"]["must_required_courses"] = mandatory_courses
+        with open(users_path, "w", encoding="utf-8") as f:
+            json.dump(users_data, f, ensure_ascii=False, indent=2)
+
+        # 返回结果
+        return mandatory_courses
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return []
+
+def get_selection_options(user_id):
     """
     任务：
-    从 courses.json, research.json, contests.json 提取所有名称。
+    根据用户的id，到user.json里面找到用户的学院和专业，
+    从 courses.json, research.json, contests.json 提取所有从属该学院下专业的名称。
     返回: {"courses": ["Python", "微积分"], "research": ["AI实验室"], "contests": ["ACM"]}
     """
-    return {"courses":[], "research":[], "contests":[]} # 待填充
+    # 定义文件路径
+    users_path = os.path.join(DB_DIR, "users.json")
+    courses_path = os.path.join(DB_DIR, "courses.json")
+    research_path = os.path.join(DB_DIR, "research.json")
+    contests_path = os.path.join(DB_DIR, "contests.json")
+
+    try:
+        # 读取 users.json
+        with open(users_path, "r", encoding="utf-8") as f:
+            users_data = json.load(f)
+
+        if user_id not in users_data:
+            raise ValueError("用户ID不存在")
+
+        # 获取用户的学院和专业
+        user_school = users_data[user_id]["profile"]["school"]
+        user_major = users_data[user_id]["profile"]["major"]
+
+        # 初始化选项
+        options = {"courses": [], "research": [], "contests": []}
+
+        # 读取 courses.json
+        with open(courses_path, "r", encoding="utf-8") as f:
+            courses_data = json.load(f)
+
+        for college in courses_data["学院列表"]:
+            if college["学院名称"] == user_school:
+                for major in college["专业列表"]:
+                    if major["专业名称"] == user_major:
+                        options["courses"] = [course["name"] for course in major["课程列表"]]
+
+        # 读取 research.json
+        with open(research_path, "r", encoding="utf-8") as f:
+            research_data = json.load(f)
+
+        for college in research_data["学院列表"]:
+            if college["学院名称"] == user_school:
+                for major in college["专业列表"]:
+                    if major["专业名称"] == user_major:
+                        options["research"] = [research["name"] for research in major["科研列表"]]
+
+        # 读取 contests.json
+        with open(contests_path, "r", encoding="utf-8") as f:
+            contests_data = json.load(f)
+
+        for college in contests_data["学院列表"]:
+            if college["学院名称"] == user_school:
+                for major in college["专业列表"]:
+                    if major["专业名称"] == user_major:
+                        options["contests"] = [contest["name"] for contest in major["竞赛列表"]]
+
+        return options
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return {"courses": [], "research": [], "contests": []}
 
 def update_user_progress(user_id, completed_data):
     """
@@ -83,6 +183,54 @@ def update_user_progress(user_id, completed_data):
     3. 核心：根据已完成课程的标签，累加用户的 knowledge 和 skills 分数（点亮技能树）。
     4. 计算剩余学分缺口 (credit_gaps)。
     """
-    return True # 待填充
+    # 定义文件路径
+    users_path = os.path.join(DB_DIR, "users.json")
+    courses_path = os.path.join(DB_DIR, "courses.json")
+
+    try:
+        # 读取 users.json
+        with open(users_path, "r", encoding="utf-8") as f:
+            users_data = json.load(f)
+
+        if user_id not in users_data:
+            raise ValueError("用户ID不存在")
+
+        user_data = users_data[user_id]
+
+        # 更新 academic_progress
+        user_data["academic_progress"]["completed_courses"].extend(completed_data.get("courses", []))
+        user_data["academic_progress"]["research_done"].extend(completed_data.get("research", []))
+        user_data["academic_progress"]["competitions_done"].extend(completed_data.get("contests", []))
+
+        # 读取 courses.json
+        with open(courses_path, "r", encoding="utf-8") as f:
+            courses_data = json.load(f)
+
+        # 累加 knowledge 和 skills 分数
+        for course_name in completed_data.get("courses", []):
+            for college in courses_data["学院列表"]:
+                for major in college["专业列表"]:
+                    for course in major["课程列表"]:
+                        if course["name"] == course_name:
+                            for knowledge, points in course["knowledge"].items():
+                                user_data["knowledge"][knowledge] += points
+
+        # 计算剩余学分缺口
+        total_credits = sum(course["credits"] for course in user_data["academic_progress"]["completed_courses"])
+        required_credits = 160  # 假设总学分要求为 160
+        credit_gaps = required_credits - total_credits
+
+        user_data["remaining_tasks"]["credit_gaps"] = credit_gaps
+
+        # 写回 users.json
+        users_data[user_id] = user_data
+        with open(users_path, "w", encoding="utf-8") as f:
+            json.dump(users_data, f, ensure_ascii=False, indent=2)
+
+        return True
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
 
 
