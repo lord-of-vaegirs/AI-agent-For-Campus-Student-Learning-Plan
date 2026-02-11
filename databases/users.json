@@ -34,9 +34,109 @@
     "remaining_tasks": {
       "must_required_courses": [
         {
-          "name": "数学分析III",
-          "semester": 3,
+          "name": "高等数学Ⅰ",
+          "semester": 1,
           "credits": 5
+        },
+        {
+          "name": "高等代数Ⅰ",
+          "semester": 1,
+          "credits": 4
+        },
+        {
+          "name": "程序设计",
+          "semester": 1,
+          "credits": 4
+        },
+        {
+          "name": "高等数学Ⅱ",
+          "semester": 2,
+          "credits": 5
+        },
+        {
+          "name": "高等代数Ⅱ",
+          "semester": 2,
+          "credits": 4
+        },
+        {
+          "name": "离散数学A",
+          "semester": 2,
+          "credits": 3
+        },
+        {
+          "name": "概率论与数理统计",
+          "semester": 3,
+          "credits": 4
+        },
+        {
+          "name": "数据结构与算法Ⅰ",
+          "semester": 3,
+          "credits": 4
+        },
+        {
+          "name": "计算机系统基础Ⅰ",
+          "semester": 3,
+          "credits": 3
+        },
+        {
+          "name": "数据科学导论",
+          "semester": 3,
+          "credits": 3
+        },
+        {
+          "name": "网络空间安全引论",
+          "semester": 3,
+          "credits": 2
+        },
+        {
+          "name": "普通物理B",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "操作系统",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "数据结构与算法Ⅱ",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "软件工程导论",
+          "semester": 4,
+          "credits": 2
+        },
+        {
+          "name": "机器学习",
+          "semester": 4,
+          "credits": 3
+        },
+        {
+          "name": "并行计算",
+          "semester": 5,
+          "credits": 2
+        },
+        {
+          "name": "数据库系统概论",
+          "semester": 5,
+          "credits": 3
+        },
+        {
+          "name": "计算机网络",
+          "semester": 6,
+          "credits": 3
+        },
+        {
+          "name": "计算理论导论",
+          "semester": 6,
+          "credits": 2
+        },
+        {
+          "name": "编译原理",
+          "semester": 6,
+          "credits": 3
         }
       ],
       "credit_gaps": [
@@ -167,14 +267,109 @@
     "remaining_tasks": {
       "must_required_courses": [
         {
-          "name": "人工智能与Python程序设计",
+          "name": "高等数学Ⅰ",
+          "semester": 1,
+          "credits": 5
+        },
+        {
+          "name": "高等代数Ⅰ",
+          "semester": 1,
+          "credits": 4
+        },
+        {
+          "name": "程序设计",
+          "semester": 1,
+          "credits": 4
+        },
+        {
+          "name": "高等数学Ⅱ",
+          "semester": 2,
+          "credits": 5
+        },
+        {
+          "name": "高等代数Ⅱ",
           "semester": 2,
           "credits": 4
         },
         {
-          "name": "数学分析III",
+          "name": "离散数学A",
+          "semester": 2,
+          "credits": 3
+        },
+        {
+          "name": "概率论与数理统计",
           "semester": 3,
-          "credits": 5
+          "credits": 4
+        },
+        {
+          "name": "数据结构与算法Ⅰ",
+          "semester": 3,
+          "credits": 4
+        },
+        {
+          "name": "计算机系统基础Ⅰ",
+          "semester": 3,
+          "credits": 3
+        },
+        {
+          "name": "数据科学导论",
+          "semester": 3,
+          "credits": 3
+        },
+        {
+          "name": "网络空间安全引论",
+          "semester": 3,
+          "credits": 2
+        },
+        {
+          "name": "普通物理B",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "操作系统",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "数据结构与算法Ⅱ",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "软件工程导论",
+          "semester": 4,
+          "credits": 2
+        },
+        {
+          "name": "机器学习",
+          "semester": 4,
+          "credits": 3
+        },
+        {
+          "name": "并行计算",
+          "semester": 5,
+          "credits": 2
+        },
+        {
+          "name": "数据库系统概论",
+          "semester": 5,
+          "credits": 3
+        },
+        {
+          "name": "计算机网络",
+          "semester": 6,
+          "credits": 3
+        },
+        {
+          "name": "计算理论导论",
+          "semester": 6,
+          "credits": 2
+        },
+        {
+          "name": "编译原理",
+          "semester": 6,
+          "credits": 3
         }
       ],
       "credit_gaps": []

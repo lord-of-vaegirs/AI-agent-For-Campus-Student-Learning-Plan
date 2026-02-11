@@ -16,6 +16,8 @@ try:
         register_user, login_user, get_mandatory_roadmap, 
         get_selection_options, update_user_progress, get_db_data
     )
+    # 🚩 新增：导入推荐算法函数
+    from recommend import stream_conversation_for_plan 
 except ImportError as e:
     st.error(f"❌ 无法加载后端模块: {e}")
 
@@ -29,7 +31,8 @@ if 'user_id' not in st.session_state:
     st.session_state.user_id = ""
 if 'needs_reset' not in st.session_state:
     st.session_state.needs_reset = False
-
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 # --- 3. 登录页面 ---
 if st.session_state.step == "login":
     st.title("🔐 智航 - 登录系统")
@@ -229,7 +232,40 @@ elif st.session_state.step == "dashboard":
 
 # --- 6. 推荐页面 ---
 elif st.session_state.step == "recommendation":
-    st.title("🤖 AI 智能规划建议")
-    st.info("功能开发中...")
-    if st.button("返回主面板"):
-        st.session_state.step = "dashboard"; st.rerun()
+    st.title("🤖 AI 智能学业规划导师")
+    st.caption("基于您的技能树、已修课程及科研竞赛背景，为您提供个性化建议。")
+
+    # 侧边栏辅助功能
+    with st.sidebar:
+        if st.button("⬅️ 返回主面板"):
+            st.session_state.step = "dashboard"
+            st.rerun()
+        if st.button("🗑️ 清空对话历史"):
+            st.session_state.messages = []
+            st.rerun()
+
+    # 展示历史消息
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    # 聊天输入框
+    if prompt := st.chat_input("您可以问我：'根据我的背景，下学期选什么课好？' 或 '推荐一些适合我的科研项目'"):
+        # 1. 展示并在状态中存储用户消息
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+        # 2. 调用后端流式接口并展示 AI 回复
+        with st.chat_message("assistant"):
+            # 获取后端生成的生成器
+            try:
+                response_generator = stream_conversation_for_plan(st.session_state.user_id, prompt)
+                
+                # 使用 streamlit 的 write_stream 自动处理流式迭代并在界面上“打字”显示
+                full_response = st.write_stream(response_generator)
+                
+                # 3. 将完整回复存入历史记录
+                st.session_state.messages.append({"role": "assistant", "content": full_response})
+            except Exception as e:
+                st.error(f"对话出错：{str(e)}")
