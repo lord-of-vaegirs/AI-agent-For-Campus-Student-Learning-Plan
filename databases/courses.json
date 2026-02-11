@@ -18,36 +18,1028 @@
           ],
           "课程列表": [
             {
-              "name": "人工智能与Python程序设计",
-              "course_introduction": "本课程介绍人工智能的基本概念和Python编程基础，涵盖机器学习、深度学习等内容，培养学生的编程能力和AI应用开发能力。",
-              "credits": 4,
-              "category": "部类基础课",
+              "name": "高等数学Ⅰ",
+              "course_introduction": "高等数学基础课程，涵盖微积分、极限、导数等基础内容",
+              "credits": 5,
+              "category": "部类核心课",
+              "standard_semester": 1,
+              "knowledge": {
+                "数学基础": 1,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "笔试",
+              "difficulty": 7.5
+            },
+            {
+              "name": "高等数学Ⅱ",
+              "course_introduction": "高等数学进阶课程，涵盖多元微积分、微分方程等内容",
+              "credits": 5,
+              "category": "部类核心课",
               "standard_semester": 2,
               "knowledge": {
-                "数学基础":1,
-                "编程语言、算法与软件工程":1,
-                "计算机系统与网络":0,
-                "数据与智能":1,
-                "网络安全与信息保护":0
+                "数学基础": 1,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "笔试",
+              "difficulty": 8.0
+            },
+            {
+              "name": "高等代数Ⅰ",
+              "course_introduction": "线性代数基础课程，涵盖矩阵、向量空间、线性变换等内容",
+              "credits": 4,
+              "category": "部类核心课",
+              "standard_semester": 1,
+              "knowledge": {
+                "数学基础": 1,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "笔试",
+              "difficulty": 7.0
+            },
+            {
+              "name": "高等代数Ⅱ",
+              "course_introduction": "线性代数进阶课程，涵盖特征值、特征向量、正交变换等内容",
+              "credits": 4,
+              "category": "部类核心课",
+              "standard_semester": 2,
+              "knowledge": {
+                "数学基础": 1,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "笔试",
+              "difficulty": 7.5
+            },
+            {
+              "name": "普通物理B",
+              "course_introduction": "大学物理基础课程，涵盖力学、热学、电磁学等内容",
+              "credits": 4,
+              "category": "部类核心课",
+              "standard_semester": "2,4",
+              "knowledge": {
+                "数学基础": 1,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "笔试+实验",
+              "difficulty": 7.0
+            },
+            {
+              "name": "程序设计",
+              "course_introduction": "程序设计基础课程，涵盖编程基础、算法设计等内容",
+              "credits": 4,
+              "category": "部类基础课",
+              "standard_semester": 1,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "上机考试",
+              "difficulty": 8.0
+            },
+            {
+              "name": "离散数学A",
+              "course_introduction": "离散数学基础课程，涵盖集合论、图论、数理逻辑等内容",
+              "credits": 3,
+              "category": "专业核心课",
+              "standard_semester": 2,
+              "knowledge": {
+                "数学基础": 1,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "笔试",
+              "difficulty": 7.5
+            },
+            {
+              "name": "概率论与数理统计",
+              "course_introduction": "概率论与统计学基础课程，涵盖概率分布、假设检验、回归分析等内容",
+              "credits": 4,
+              "category": "专业核心课",
+              "standard_semester": 3,
+              "knowledge": {
+                "数学基础": 1,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "笔试",
+              "difficulty": 7.5
+            },
+            {
+              "name": "数据结构与算法Ⅰ",
+              "course_introduction": "数据结构与算法基础课程，涵盖线性结构、树、图等数据结构",
+              "credits": 4,
+              "category": "专业核心课",
+              "standard_semester": 3,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 8.0
+            },
+            {
+              "name": "计算机系统基础Ⅰ",
+              "course_introduction": "计算机系统基础课程，涵盖计算机组成、操作系统基础等内容",
+              "credits": 3,
+              "category": "专业核心课",
+              "standard_semester": 3,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
               },
               "assessment": "大作业+笔试",
               "difficulty": 7.5
             },
             {
-              "name": "数学分析III",
-              "course_introduction": "本课程是数学分析系列课程的第三部分，主要内容包括多元函数微积分、重积分、曲线积分和曲面积分等，培养学生的数学分析能力和抽象思维能力。",
-              "credits": 5,
+              "name": "数据科学导论",
+              "course_introduction": "数据科学基础课程，涵盖数据收集、处理、分析和可视化等内容",
+              "credits": 3,
               "category": "专业核心课",
               "standard_semester": 3,
               "knowledge": {
-                "数学基础":1,
-                "编程语言、算法与软件工程":0,
-                "计算机系统与网络":0,
-                "数据与智能":0,
-                "网络安全与信息保护":0
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
               },
-              "assessment": "闭卷考试",
-              "difficulty": 9.8
+              "assessment": "大作业+报告",
+              "difficulty": 7.0
+            },
+            {
+              "name": "操作系统",
+              "course_introduction": "操作系统原理课程，涵盖进程管理、内存管理、文件系统等内容",
+              "credits": 4,
+              "category": "专业核心课",
+              "standard_semester": 4,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 8.0
+            },
+            {
+              "name": "数据结构与算法Ⅱ",
+              "course_introduction": "数据结构与算法进阶课程，涵盖高级算法设计和分析",
+              "credits": 4,
+              "category": "专业核心课",
+              "standard_semester": 4,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 8.5
+            },
+            {
+              "name": "计算机网络",
+              "course_introduction": "计算机网络原理课程，涵盖网络协议、网络架构、网络安全等内容",
+              "credits": 3,
+              "category": "专业核心课",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 7.5
+            },
+            {
+              "name": "网络空间安全引论",
+              "course_introduction": "网络安全基础课程，涵盖网络安全威胁、防御技术、密码学基础等内容",
+              "credits": 2,
+              "category": "专业核心课",
+              "standard_semester": 3,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 1
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 7.0
+            },
+            {
+              "name": "软件工程导论",
+              "course_introduction": "软件工程基础课程，涵盖软件开发流程、项目管理、质量保证等内容",
+              "credits": 2,
+              "category": "专业核心课",
+              "standard_semester": 4,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "项目+报告",
+              "difficulty": 7.0
+            },
+            {
+              "name": "机器学习",
+              "course_introduction": "机器学习基础课程，涵盖监督学习、无监督学习、深度学习等内容",
+              "credits": 3,
+              "category": "专业核心课",
+              "standard_semester": 4,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.5
+            },
+            {
+              "name": "程序设计实践",
+              "course_introduction": "编程实践课程，通过实际项目提高编程能力和工程实践能力",
+              "credits": 2,
+              "category": "个性化选修课",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "项目实践",
+              "difficulty": 7.5
+            },
+            {
+              "name": "并行计算",
+              "course_introduction": "并行计算基础课程，涵盖并行算法、并行架构、分布式计算等内容",
+              "credits": 2,
+              "category": "专业核心课",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 8.5
+            },
+            {
+              "name": "计算理论导论",
+              "course_introduction": "计算理论基础课程，涵盖自动机理论、可计算性、复杂性理论等内容",
+              "credits": 2,
+              "category": "专业核心课",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "笔试",
+              "difficulty": 9.0
+            },
+            {
+              "name": "编译原理",
+              "course_introduction": "编译原理课程，涵盖词法分析、语法分析、语义分析、代码生成等内容",
+              "credits": 3,
+              "category": "专业核心课",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 9.0
+            },
+            {
+              "name": "数据库系统概论",
+              "course_introduction": "本课程介绍数据库系统的基本概念,原理和方法,涵盖关系数据模型,SQL语言,数据库设计、事务处理、并发控制、数据库安全等内容,培养学生设计和实现数据库系统的能力.",
+              "credits": 3,
+              "category": "专业核心课",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 9.0
+            },
+            {
+              "name": "开源软件实践",
+              "course_introduction": "本课程介绍开源软件的基本概念、开发流程和社区参与方式，培养学生参与开源项目的能力和实践经验",
+              "credits": 2,
+              "category": "个性化选修——10计算机类专业实践",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "项目实践",
+              "difficulty": 7.5
+            },
+            {
+              "name": "信息安全实践与创新（信息安全竞赛）",
+              "course_introduction": "本课程通过信息安全竞赛的形式，培养学生的信息安全实践能力和创新思维",
+              "credits": 2,
+              "category": "个性化选修——10计算机类专业实践",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 1
+              },
+              "assessment": "竞赛+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "数据科学实践",
+              "course_introduction": "本课程通过实际数据科学项目，培养学生的数据处理、分析和可视化能力",
+              "credits": 2,
+              "category": "个性化选修——10计算机类专业实践",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "项目实践+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "数据库系统开发实践",
+              "course_introduction": "本课程通过实际数据库系统开发项目，培养学生的数据库设计、实现和优化能力",
+              "credits": 2,
+              "category": "个性化选修——10计算机类专业实践",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "项目开发+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "现代处理器设计",
+              "course_introduction": "本课程介绍现代处理器设计的基本原理和方法，涵盖指令集架构、流水线设计、超标量技术等内容",
+              "credits": 3,
+              "category": "个性化选修——11复杂工程实践",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+设计报告",
+              "difficulty": 8.5
+            },
+            {
+              "name": "操作系统内核实现",
+              "course_introduction": "本课程通过实际操作系统的内核实现，深入理解操作系统原理和内核开发技术",
+              "credits": 3,
+              "category": "个性化选修——11复杂工程实践",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "内核实现+报告",
+              "difficulty": 9.0
+            },
+            {
+              "name": "人工智能计算系统",
+              "course_introduction": "本课程介绍人工智能计算系统的设计与实现，涵盖AI芯片、加速器、异构计算等内容",
+              "credits": 3,
+              "category": "个性化选修——11复杂工程实践",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+设计报告",
+              "difficulty": 8.5
+            },
+            {
+              "name": "运筹学建模与算法",
+              "course_introduction": "本课程介绍运筹学的基本模型和算法，涵盖线性规划、整数规划、网络优化等内容",
+              "credits": 3,
+              "category": "个性化选修——12计算机理论基础",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 8.0
+            },
+            {
+              "name": "最优化方法",
+              "course_introduction": "本课程介绍最优化理论和方法，涵盖凸优化、非线性规划、梯度下降算法等内容",
+              "credits": 3,
+              "category": "个性化选修——12计算机理论基础",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 8.5
+            },
+            {
+              "name": "图论",
+              "course_introduction": "本课程介绍图论的基本概念和算法，涵盖图的表示、遍历、最短路径、最小生成树等内容",
+              "credits": 2,
+              "category": "个性化选修——12计算机理论基础",
+              "standard_semester": 4,
+              "knowledge": {
+                "数学基础": 1,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 7.5
+            },
+            {
+              "name": "计算学习理论",
+              "course_introduction": "本课程介绍计算学习理论的基本概念，涵盖PAC学习、VC维、样本复杂度等内容",
+              "credits": 2,
+              "category": "个性化选修——12计算机理论基础",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 8.5
+            },
+            {
+              "name": "数字逻辑与数字电路",
+              "course_introduction": "本课程介绍数字逻辑和数字电路设计的基本原理，涵盖逻辑门、组合电路、时序电路等内容",
+              "credits": 2,
+              "category": "个性化选修——13系统与网络",
+              "standard_semester": 3,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "实验+笔试",
+              "difficulty": 7.5
+            },
+            {
+              "name": "无线通信技术",
+              "course_introduction": "本课程介绍无线通信技术的基本原理和应用，涵盖无线信道、调制解调、多址技术等内容",
+              "credits": 2,
+              "category": "个性化选修——13系统与网络",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "RUST系统编程实践",
+              "course_introduction": "本课程介绍使用RUST语言进行系统级编程的方法和实践",
+              "credits": 2,
+              "category": "个性化选修——13系统与网络",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "编程实践+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "智能数据管理系统",
+              "course_introduction": "本课程介绍智能数据管理系统的设计与实现，涵盖数据库优化、查询处理、智能索引等内容",
+              "credits": 2,
+              "category": "个性化选修——13系统与网络",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "现代通信技术",
+              "course_introduction": "本课程介绍现代通信技术的最新发展，涵盖5G/6G、物联网、卫星通信等内容",
+              "credits": 2,
+              "category": "个性化选修——13系统与网络",
+              "standard_semester": 7,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "深度学习应用",
+              "course_introduction": "本课程介绍深度学习在实际问题中的应用，涵盖图像识别、自然语言处理、推荐系统等内容",
+              "credits": 3,
+              "category": "个性化选修——14人工智能",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.5
+            },
+            {
+              "name": "自然语言处理",
+              "course_introduction": "本课程介绍自然语言处理的基本原理和方法，涵盖文本分类、机器翻译、情感分析等内容",
+              "credits": 2,
+              "category": "个性化选修——14人工智能",
+              "standard_semester": 7,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.5
+            },
+            {
+              "name": "迁移学习",
+              "course_introduction": "本课程介绍迁移学习的基本概念和方法，涵盖领域适应、知识蒸馏、元学习等内容",
+              "credits": 2,
+              "category": "个性化选修——14人工智能",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "信息检索导论",
+              "course_introduction": "本课程介绍信息检索的基本原理和系统，涵盖搜索引擎、索引技术、排名算法等内容",
+              "credits": 2,
+              "category": "个性化选修——14人工智能",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "机器感知技术",
+              "course_introduction": "本课程介绍机器感知技术的基本原理，涵盖计算机视觉、语音识别、传感器融合等内容",
+              "credits": 2,
+              "category": "个性化选修——14人工智能",
+              "standard_semester": 7,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "数据治理",
+              "course_introduction": "本课程介绍数据治理的基本概念和方法，涵盖数据质量、数据安全、数据生命周期管理等内容",
+              "credits": 2,
+              "category": "个性化选修——15大数据技术",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "网络舆情与市场",
+              "course_introduction": "本课程介绍网络舆情分析和市场研究的基本方法，涵盖数据挖掘、情感分析、市场预测等内容",
+              "credits": 2,
+              "category": "个性化选修——15大数据技术",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "大数据可视化",
+              "course_introduction": "本课程介绍大数据可视化的基本原理和工具，涵盖数据探索、交互式可视化、故事叙述等内容",
+              "credits": 2,
+              "category": "个性化选修——15大数据技术",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "大数据隐私计算",
+              "course_introduction": "本课程介绍大数据隐私计算的基本方法，涵盖差分隐私、联邦学习、安全多方计算等内容",
+              "credits": 2,
+              "category": "个性化选修——15大数据技术",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 1
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "机器学习风险评估与管理",
+              "course_introduction": "本课程介绍机器学习系统的风险评估和管理方法，涵盖模型偏差、安全性评估、合规性等内容",
+              "credits": 2,
+              "category": "个性化选修——15大数据技术",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "多媒体技术",
+              "course_introduction": "本课程介绍多媒体技术的基本原理和应用，涵盖音频处理、图像处理、视频编码等内容",
+              "credits": 2,
+              "category": "个性化选修——16多媒体技术",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "Spoken Language Processing",
+              "course_introduction": "本课程介绍口语语言处理的基本原理和方法，涵盖语音识别、语音合成、对话系统等内容",
+              "credits": 2,
+              "category": "个性化选修——16多媒体技术",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "模式识别与计算机视觉",
+              "course_introduction": "本课程介绍模式识别和计算机视觉的基本原理，涵盖特征提取、分类算法、目标检测等内容",
+              "credits": 2,
+              "category": "个性化选修——16多媒体技术",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 1,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "数字信号处理",
+              "course_introduction": "本课程介绍数字信号处理的基本原理和方法，涵盖离散傅里叶变换、滤波器设计、信号分析等内容",
+              "credits": 3,
+              "category": "个性化选修——16多媒体技术",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 1,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "大作业+笔试",
+              "difficulty": 7.5
+            },
+            {
+              "name": "函数式编程",
+              "course_introduction": "本课程介绍函数式编程的基本概念和范式，涵盖高阶函数、纯函数、惰性求值等内容",
+              "credits": 2,
+              "category": "个性化选修——17软件工程",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "编程作业+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "软件测试",
+              "course_introduction": "本课程介绍软件测试的基本原理和方法，涵盖单元测试、集成测试、自动化测试等内容",
+              "credits": 2,
+              "category": "个性化选修——17软件工程",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "测试实践+报告",
+              "difficulty": 7.0
+            },
+            {
+              "name": "JAVA程序设计",
+              "course_introduction": "本课程介绍JAVA编程语言的基本语法和面向对象编程思想，涵盖类与对象、继承、多态等内容",
+              "credits": 3,
+              "category": "个性化选修——17软件工程",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "编程作业+笔试",
+              "difficulty": 7.5
+            },
+            {
+              "name": "分布式应用程序设计",
+              "course_introduction": "本课程介绍分布式应用程序的设计与开发，涵盖分布式系统原理、中间件、微服务架构等内容",
+              "credits": 3,
+              "category": "个性化选修——17软件工程",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "项目开发+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "程序设计安全",
+              "course_introduction": "本课程介绍程序设计中的安全问题，涵盖缓冲区溢出、代码注入、安全编码规范等内容",
+              "credits": 2,
+              "category": "个性化选修——18信息安全技术",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 1
+              },
+              "assessment": "安全编程+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "操作系统内核分析与实践",
+              "course_introduction": "本课程通过分析操作系统内核，深入理解操作系统安全机制和漏洞利用技术",
+              "credits": 2,
+              "category": "个性化选修——18信息安全技术",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "内核分析+报告",
+              "difficulty": 8.5
+            },
+            {
+              "name": "Software Quality Assurance",
+              "course_introduction": "本课程介绍软件质量保证的基本方法，涵盖测试策略、质量度量、过程改进等内容",
+              "credits": 2,
+              "category": "个性化选修——18信息安全技术",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 1,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "质量评估+报告",
+              "difficulty": 7.0
+            },
+            {
+              "name": "Web安全",
+              "course_introduction": "本课程介绍Web安全的基本原理和防护技术，涵盖XSS、CSRF、SQL注入等内容",
+              "credits": 2,
+              "category": "个性化选修——18信息安全技术",
+              "standard_semester": 4,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 1
+              },
+              "assessment": "渗透测试+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "区块链原理及实践",
+              "course_introduction": "本课程介绍区块链的基本原理和实现技术，涵盖共识算法、智能合约、去中心化应用等内容",
+              "credits": 2,
+              "category": "个性化选修——18信息安全技术",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 1,
+                "数据与智能": 0,
+                "网络安全与信息保护": 0
+              },
+              "assessment": "项目实践+报告",
+              "difficulty": 8.0
+            },
+            {
+              "name": "信息内容安全",
+              "course_introduction": "本课程介绍信息内容安全的基本原理和技术，涵盖文本过滤、图像识别、舆情监测等内容",
+              "credits": 2,
+              "category": "个性化选修——19信息安全应用",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 1
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 7.5
+            },
+            {
+              "name": "信息安全管理",
+              "course_introduction": "本课程介绍信息安全管理的体系和方法，涵盖风险评估、安全策略、合规管理等内容",
+              "credits": 2,
+              "category": "个性化选修——19信息安全应用",
+              "standard_semester": 5,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 1
+              },
+              "assessment": "案例分析+报告",
+              "difficulty": 7.0
+            },
+            {
+              "name": "人工智能安全",
+              "course_introduction": "本课程介绍人工智能系统的安全问题，涵盖对抗样本、模型窃取、数据投毒等内容",
+              "credits": 2,
+              "category": "个性化选修——19信息安全应用",
+              "standard_semester": 6,
+              "knowledge": {
+                "数学基础": 0,
+                "编程语言、算法与软件工程": 0,
+                "计算机系统与网络": 0,
+                "数据与智能": 0,
+                "网络安全与信息保护": 1
+              },
+              "assessment": "大作业+报告",
+              "difficulty": 8.5
             }
           ]
         }
