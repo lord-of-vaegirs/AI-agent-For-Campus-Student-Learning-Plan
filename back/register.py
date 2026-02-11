@@ -145,13 +145,18 @@ def get_selection_options(user_id):
     return res
 
 def update_user_progress(user_id, payload):
+    """
+    更新用户进度并重新计算分值
+    逻辑：
+    1. 课程 -> 仅加在 knowledge (技能树)
+    2. 科研/竞赛 -> 仅加在 skills (雷达图)
+    """
     users_all = get_db_data("users.json")
     user = users_all.get(user_id)
     if not user: return False
 
     try:
-        # --- 核心修改：逻辑去重 ---
-        # 使用字典的 Key 特性，确保同一个名字的课程/竞赛只保留一个最新对象
+        # 1. 逻辑去重（确保同一项目不重复出现在列表中）
         def deduplicate(data_list):
             unique_data = {}
             for item in data_list:
@@ -162,37 +167,25 @@ def update_user_progress(user_id, payload):
         user["academic_progress"]["competitions_done"] = deduplicate(payload.get("competitions", []))
         user["academic_progress"]["research_done"] = deduplicate(payload.get("research", []))
 
-        # --- 重新计算分值 (逻辑同之前) ---
-        course_lookup = {}
-        c_all = get_db_data("courses.json")
-        for col in c_all.get("学院列表", []):
-            for m in col.get("专业列表", []):
-                for c in m.get("课程列表", []):
-                    course_lookup[c["name"]] = c
+        # 2. 准备查找字典 (扁平化所有数据库方便查询)
+        def build_lookup(db_name, list_key):
+            lookup = {}
+            db_content = get_db_data(db_name)
+            for college in db_content.get("学院列表", []):
+                for major in college.get("专业列表", []):
+                    for item in major.get(list_key, []):
+                        lookup[item["name"]] = item
+            return lookup
 
-        # 重置分数
+        course_lookup = build_lookup("courses.json", "课程列表")
+        research_lookup = build_lookup("research.json", "科研列表")
+        contest_lookup = build_lookup("contests.json", "竞赛列表")
+
+        # 3. 初始化/清零 知识点和能力分数，准备重算
         for k in user["knowledge"]: user["knowledge"][k] = 0.0
         for s in user["skills"]: user["skills"][s] = 0.0
-        total_creds = 0.0
-
-        for c_done in user["academic_progress"]["completed_courses"]:
-            name = c_done["name"]
-            gpa = float(c_done.get("grade", 0))
-            if name in course_lookup:
-                info = course_lookup[name]
-                creds = float(info.get("credits", 0))
-                total_creds += creds
-                
-                # 重新计算 Knowledge
-                for kd, base in info.get("knowledge", {}).items():
-                    if kd in user["knowledge"]:
-                        user["knowledge"][kd] += round(base * creds * gpa, 2)
-                # 重新计算 Skills
-                for sd, base in info.get("skills", {}).items():
-                    if sd in user["skills"]:
-                        user["skills"][sd] += round(base * creds * gpa, 2)
-
-        # --- 计算总学分和平均绩点 ---
+        
+        # 4. --- 计算课程贡献 (仅 Knowledge) ---
         total_credits = 0.0
         total_grade_points = 0.0
 
@@ -204,19 +197,44 @@ def update_user_progress(user_id, payload):
                 creds = float(info.get("credits", 0))
                 total_credits += creds
                 total_grade_points += creds * gpa
+                
+                # 更新知识树分数：维度分 * 学分 * 绩点
+                if "knowledge" in info:
+                    for kd, base in info["knowledge"].items():
+                        if kd in user["knowledge"]:
+                            user["knowledge"][kd] += round(base * creds * gpa, 2)
 
-        # 计算平均绩点
-        average_grades = round(total_grade_points / total_credits, 2) if total_credits > 0 else 0.0
+        # 5. --- 计算科研贡献 (仅 Skills) ---
+        # 逻辑：直接累加科研库中定义的 skills 基础分
+        for r_done in user["academic_progress"]["research_done"]:
+            name = r_done["name"]
+            if name in research_lookup:
+                info = research_lookup[name]
+                if "skills" in info:
+                    for sd, val in info["skills"].items():
+                        if sd in user["skills"]:
+                            user["skills"][sd] += float(val)
 
-        # 更新用户的总学分和平均绩点
+        # 6. --- 计算竞赛贡献 (仅 Skills) ---
+        # 逻辑：直接累加竞赛库中定义的 skills 基础分 (忽略获奖情况)
+        for ct_done in user["academic_progress"]["competitions_done"]:
+            name = ct_done["name"]
+            if name in contest_lookup:
+                info = contest_lookup[name]
+                if "skills" in info:
+                    for sd, val in info["skills"].items():
+                        if sd in user["skills"]:
+                            user["skills"][sd] += float(val)
+
+        # 7. 更新汇总统计字段 (GPA & 总学分)
         user["total_credits"] = total_credits
-        user["average_grades"] = average_grades
+        user["average_grades"] = round(total_grade_points / total_credits, 2) if total_credits > 0 else 0.0
 
-        # 保存回 JSON
+        # 8. 保存回 JSON
         users_all[user_id] = user
         with open(os.path.join(DB_DIR, "users.json"), "w", encoding="utf-8") as f:
             json.dump(users_all, f, ensure_ascii=False, indent=2)
         return True
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Update Error: {e}")
         return False

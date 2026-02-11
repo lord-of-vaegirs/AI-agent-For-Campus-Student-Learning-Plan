@@ -396,5 +396,170 @@
     },
     "total_credits": 5.0,
     "average_grades": 3.9
+  },
+  "user_2024200002": {
+    "profile": {
+      "name": "一一",
+      "enrollment_year": 2024,
+      "school": "信息学院",
+      "major": "计算机科学与技术",
+      "target": "出国深造"
+    },
+    "academic_progress": {
+      "current_semester": 1,
+      "completed_courses": [
+        {
+          "name": "高等数学Ⅱ",
+          "grade": 3.7,
+          "semester": 1,
+          "category": "已修"
+        }
+      ],
+      "research_done": [
+        {
+          "name": "基于深度学习的图像识别技术研究",
+          "complete_semester": 1
+        }
+      ],
+      "competitions_done": [
+        {
+          "name": "国际大学生程序设计竞赛 (ICPC)",
+          "award": "铜奖",
+          "complete_semester": 1
+        }
+      ]
+    },
+    "remaining_tasks": {
+      "must_required_courses": [
+        {
+          "name": "高等数学Ⅰ",
+          "semester": 1,
+          "credits": 5
+        },
+        {
+          "name": "高等代数Ⅰ",
+          "semester": 1,
+          "credits": 4
+        },
+        {
+          "name": "程序设计",
+          "semester": 1,
+          "credits": 4
+        },
+        {
+          "name": "高等数学Ⅱ",
+          "semester": 2,
+          "credits": 5
+        },
+        {
+          "name": "高等代数Ⅱ",
+          "semester": 2,
+          "credits": 4
+        },
+        {
+          "name": "离散数学A",
+          "semester": 2,
+          "credits": 3
+        },
+        {
+          "name": "概率论与数理统计",
+          "semester": 3,
+          "credits": 4
+        },
+        {
+          "name": "数据结构与算法Ⅰ",
+          "semester": 3,
+          "credits": 4
+        },
+        {
+          "name": "计算机系统基础Ⅰ",
+          "semester": 3,
+          "credits": 3
+        },
+        {
+          "name": "数据科学导论",
+          "semester": 3,
+          "credits": 3
+        },
+        {
+          "name": "网络空间安全引论",
+          "semester": 3,
+          "credits": 2
+        },
+        {
+          "name": "普通物理B",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "操作系统",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "数据结构与算法Ⅱ",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "软件工程导论",
+          "semester": 4,
+          "credits": 2
+        },
+        {
+          "name": "机器学习",
+          "semester": 4,
+          "credits": 3
+        },
+        {
+          "name": "并行计算",
+          "semester": 5,
+          "credits": 2
+        },
+        {
+          "name": "数据库系统概论",
+          "semester": 5,
+          "credits": 3
+        },
+        {
+          "name": "计算机网络",
+          "semester": 6,
+          "credits": 3
+        },
+        {
+          "name": "计算理论导论",
+          "semester": 6,
+          "credits": 2
+        },
+        {
+          "name": "编译原理",
+          "semester": 6,
+          "credits": 3
+        }
+      ],
+      "credit_gaps": []
+    },
+    "path_review": {
+      "is_public": false,
+      "content": "",
+      "citation_count": 0,
+      "current_rank": 0
+    },
+    "knowledge": {
+      "数学基础": 18.5,
+      "编程语言、算法与软件工程": 0.0,
+      "计算机系统与网络": 0.0,
+      "数据与智能": 0.0,
+      "网络安全与信息保护": 0.0
+    },
+    "skills": {
+      "系统化思维": 8.0,
+      "形式化逻辑与数学迁移": 10.0,
+      "工具化与自动化本能": 6.0,
+      "信息检索与数据处理": 4.0,
+      "异常处理与边界意识": 8.0
+    },
+    "total_credits": 5.0,
+    "average_grades": 3.7
   }
 }
