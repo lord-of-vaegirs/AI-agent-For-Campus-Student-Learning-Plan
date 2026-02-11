@@ -130,5 +130,75 @@
     },
     "total_credits": 5.0,
     "average_grades": 3.7
+  },
+  "user_2022200002": {
+    "profile": {
+      "name": "李华",
+      "enrollment_year": 2024,
+      "school": "信息学院",
+      "major": "计算机科学与技术",
+      "target": "保研"
+    },
+    "academic_progress": {
+      "current_semester": 1,
+      "completed_courses": [
+        {
+          "name": "数学分析III",
+          "grade": 3.9,
+          "semester": 1,
+          "category": "已修"
+        }
+      ],
+      "research_done": [
+        {
+          "name": "基于深度学习的图像识别技术研究",
+          "complete_semester": 2
+        }
+      ],
+      "competitions_done": [
+        {
+          "name": "国际大学生程序设计竞赛 (ICPC)",
+          "award": "铜奖",
+          "complete_semester": 1
+        }
+      ]
+    },
+    "remaining_tasks": {
+      "must_required_courses": [
+        {
+          "name": "人工智能与Python程序设计",
+          "semester": 2,
+          "credits": 4
+        },
+        {
+          "name": "数学分析III",
+          "semester": 3,
+          "credits": 5
+        }
+      ],
+      "credit_gaps": []
+    },
+    "path_review": {
+      "is_public": false,
+      "content": "",
+      "citation_count": 0,
+      "current_rank": 0
+    },
+    "knowledge": {
+      "数学基础": 19.5,
+      "编程语言、算法与软件工程": 0.0,
+      "计算机系统与网络": 0.0,
+      "数据与智能": 0.0,
+      "网络安全与信息保护": 0.0
+    },
+    "skills": {
+      "系统化思维": 0.0,
+      "形式化逻辑与数学迁移": 0.0,
+      "工具化与自动化本能": 0.0,
+      "信息检索与数据处理": 0.0,
+      "异常处理与边界意识": 0.0
+    },
+    "total_credits": 5.0,
+    "average_grades": 3.9
   }
 }

@@ -166,6 +166,7 @@ elif st.session_state.step == "dashboard":
             contest_new.append({"name": n, "award": a, "complete_semester": cs})
 
         st.divider()
+        # 3. 科研录入
         st.write("#### 🧪 新增科研项目")
         sel_r = st.multiselect("搜索并选择参与的科研", options=opts.get('research', []), key="ms_r")
         research_new = []
@@ -174,10 +175,12 @@ elif st.session_state.step == "dashboard":
                 st.warning(f"💡 科研【{n}】已在记录中。")
                 continue
             col1, col2 = st.columns([3, 1])
-            with col1: st.help(f"**{n}**")
-            with col2: rs = st.number_input("完成学期", 1, 8, user['academic_progress']['current_semester'], key=f"rs_{n}")
+            with col1: 
+                # ✅ 使用 st.info 看起来最美观，或者用 st.markdown
+                st.info(f"项目名称：**{n}**") 
+            with col2: 
+                rs = st.number_input("完成学期", 1, 8, user['academic_progress']['current_semester'], key=f"rs_{n}")
             research_new.append({"name": n, "complete_semester": rs})
-
         if st.button("🚀 同步数据并更新能力画像", type="primary", use_container_width=True):
             if not course_new and not contest_new and not research_new:
                 st.warning("未检测到新的录入内容。")
