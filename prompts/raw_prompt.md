@@ -6,7 +6,7 @@
 
 * 学校对学生培养方案背景：一名学生，从属于对应的一个学院下的一个专业（例：信息学院 计算机科学与技术），需要在大学的四年中完成对应所有必修课的修读，完成个性化选修课选修要求（请见databases文件夹下course_requirement.json模拟数据库），完成适量的科研和竞赛任务，才能满足毕业需求。对于该学生所在专业应该修读哪些必修课，有哪些个性化选修课选择，则在databases文件夹下courses.json这个模拟数据库里面对应学院和专业下展示。对于该学生所在专业能选择哪些科研和竞赛，则在databases文件夹下research.json和contests.json里面对应学院和专业展示。
 
-* 任务：你需要先根据用户的id，到users.json数据库中找到对应的用户。对应用户信息字段里面academic_progress下有一个current_semester字段，里面标注的是当前的学期。enrollment_year字段标注的是用户入学年份。请你根据用户的学院（school字段）、用户的专业（major字段）、用户的最终目标（target字段）、已完成的学业（academic_progress字段）、未完成的修读任务（remaining_tasks字段）、知识点技能树（knowledge字段）以及 能力技能树（skills字段），同时参考下面各个数据库和他们的解释，为用户生成一份可行并且符合用户目前迫切需求的个性化选修、科研和竞赛选择建议。
+* 任务：你需要先根据用户的id，到users.json数据库中找到对应的用户。对应用户信息字段里面academic_progress下有一个current_semester字段，里面标注的是当前的学期，你所推荐的课程必须是在当前学期开设的。enrollment_year字段标注的是用户入学年份。请你根据用户的学院（school字段）、用户的专业（major字段）、用户的最终目标（target字段）、已完成的学业（academic_progress字段）、未完成的修读任务（remaining_tasks字段）、知识点技能树（knowledge字段）以及 能力技能树（skills字段），同时参考下面各个数据库和他们的解释，为用户生成一份可行并且符合用户目前迫切需求的个性化选修、科研和竞赛选择建议。
 
 * user.json用户数据库中要用到的参考指标重要解释：
     1. academic_progress字段解释

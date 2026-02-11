@@ -2,6 +2,8 @@ import json
 import os
 import sys
 
+DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
+
 _SESSION_CACHE = {}
 
 def stream_conversation_for_plan(user_id, demand):
@@ -41,6 +43,7 @@ def stream_conversation_for_plan(user_id, demand):
 
     profile = user_info.get("profile", {})
     major = profile.get("major")
+    current_semester = user_info.get("academic_progress", {}).get("current_semester")
     if not major:
         raise ValueError(f"User with ID {user_id} does not have a major in users.json.")
 
@@ -58,11 +61,20 @@ def stream_conversation_for_plan(user_id, demand):
     research = load_json('../databases/research.json', 'research.json')
     course_requirement = load_json('../databases/course_requirement.json', 'course_requirement.json')
 
-    def filter_by_major(data):
+    def filter_by_major(data, restrict_courses=False):
         result = []
         for school in data.get("学院列表", []):
             for major_info in school.get("专业列表", []):
                 if major_info.get("专业名称") == major:
+                    if restrict_courses and current_semester is not None:
+                        filtered_major = dict(major_info)
+                        filtered_courses = []
+                        for course in major_info.get("课程列表", []):
+                            offered_semester = course.get("standard_semester")
+                            if offered_semester == current_semester:
+                                filtered_courses.append(course)
+                        filtered_major["课程列表"] = filtered_courses
+                        major_info = filtered_major
                     result.append({
                         "学院名称": school.get("学院名称"),
                         "专业": major_info
@@ -70,7 +82,7 @@ def stream_conversation_for_plan(user_id, demand):
         return result
 
     contests_by_major = filter_by_major(contests)
-    courses_by_major = filter_by_major(courses)
+    courses_by_major = filter_by_major(courses, restrict_courses=True)
     research_by_major = filter_by_major(research)
     course_requirement_by_major = filter_by_major(course_requirement)
 
@@ -90,46 +102,57 @@ def stream_conversation_for_plan(user_id, demand):
     if not session:
         session = {
             "base_prompt": base_prompt,
-            "turns": []
+            "turns": [],
+            "assistant_responses": []
         }
         _SESSION_CACHE[user_id] = session
 
     session["turns"].append({"role": "user", "content": demand})
 
-    turns_text = "\n".join(
-        f"User: {turn['content']}" for turn in session["turns"]
+    recent_assistant_responses = session["assistant_responses"][-2:]
+    recent_assistant_text = "\n".join(
+        f"Assistant: {text}" for text in recent_assistant_responses
     )
+
+    turns_text = f"User: {demand}"
 
     prompt = (
         f"{session['base_prompt']}\n\n"
+        f"Recent Assistant Replies:\n{recent_assistant_text}\n\n"
         f"Conversation History:\n{turns_text}\n\n"
         "Assistant:"
     )
 
-    # Step 7: Interact with the local LLM (Ollama streaming)
+    # Step 7: Interact with the cloud LLM (DeepSeek streaming)
     def llm_stream_response(prompt):
         """
-        Stream response from a local Ollama model.
-        Set OLLAMA_HOST or OLLAMA_MODEL env vars to override defaults.
+        Stream response from DeepSeek's OpenAI-compatible API.
+        Set DEEPSEEK_API_KEY and optionally DEEPSEEK_MODEL/DEEPSEEK_BASE_URL.
         """
         import urllib.request
 
-        base_url = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
-        model_name = os.environ.get("OLLAMA_MODEL", "llama3.1:8b")
+        api_key = os.environ.get("DEEPSEEK_API_KEY", DEEPSEEK_API_KEY)
+        if not api_key:
+            raise ValueError("DEEPSEEK_API_KEY is not set.")
+
+        base_url = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1")
+        model_name = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
 
         payload = json.dumps({
             "model": model_name,
-            "prompt": prompt,
             "stream": True,
-            "options": {
-                "num_ctx": 32768
-            }
+            "messages": [
+                {"role": "user", "content": prompt}
+            ]
         }).encode("utf-8")
 
         req = urllib.request.Request(
-            f"{base_url}/api/generate",
+            f"{base_url}/chat/completions",
             data=payload,
-            headers={"Content-Type": "application/json"}
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}"
+            }
         )
 
         try:
@@ -138,46 +161,72 @@ def stream_conversation_for_plan(user_id, demand):
                     if not raw_line:
                         continue
                     line = raw_line.decode("utf-8").strip()
-                    if not line:
+                    if not line or not line.startswith("data:"):
                         continue
-                    data = json.loads(line)
-                    if data.get("done"):
+                    data_str = line[len("data:"):].strip()
+                    if data_str == "[DONE]":
                         break
-                    if "response" in data:
-                        yield data["response"]
+                    data = json.loads(data_str)
+                    choices = data.get("choices", [])
+                    if not choices:
+                        continue
+                    delta = choices[0].get("delta", {})
+                    content = delta.get("content")
+                    if content:
+                        yield content
         except urllib.error.URLError as exc:
-            raise ConnectionError(f"Failed to connect to Ollama at {base_url}.") from exc
+            raise ConnectionError(f"Failed to connect to DeepSeek at {base_url}.") from exc
 
-    # Step 8: Return the streaming response from the LLM
-    return llm_stream_response(prompt)
+    # Step 8: Return the streaming response from the LLM and store it
+    def stream_and_store():
+        response_chunks = []
+        for chunk in llm_stream_response(prompt):
+            response_chunks.append(chunk)
+            yield chunk
+        full_response = "".join(response_chunks).strip()
+        if full_response:
+            session["assistant_responses"].append(full_response)
+
+    return stream_and_store()
 
 
 if __name__ == "__main__":
     # Example usage
     user_id = "user_2023000001"
-    demand = "Based on my profile and the available courses, research projects, and competitions, please provide direct recommendations for: 1) personalized elective courses I should take next semester, 2) research projects that align with my goals, and 3) competitions I should participate in. After your recommendations, ask if I need any clarifications or have other requirements."
-    
+    demands = [
+        "Based on my profile and the available courses, research projects, and competitions, please provide direct recommendations for: 1) personalized elective courses I should take next semester, 2) research projects that align with my goals, and 3) competitions I should participate in. After your recommendations, ask if I need any clarifications or have other requirements.",
+        "Please narrow down the elective courses to 2 options and explain why they fit my current semester.",
+        "Given my research goal of deep learning, suggest one research project and one competition I should prioritize.",
+        "Provide a brief actionable plan for the next semester based on all the above."
+    ]
+
     # Create output directory if not exists
     output_dir = os.path.join(os.path.dirname(__file__), '../test_output')
     os.makedirs(output_dir, exist_ok=True)
-    
+
     # Create output file with timestamp
     from datetime import datetime
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     output_file = os.path.join(output_dir, f'recommendation_test_{timestamp}.txt')
-    
+
     print(f"Starting test... Output will be saved to: {output_file}")
     print("Generating recommendations...\n")
-    
+
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(f"Test Run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write(f"User ID: {user_id}\n")
-        f.write(f"Demand: {demand}\n")
         f.write("="*80 + "\n\n")
-        f.write("LLM Response:\n\n")
-        
-        for response in stream_conversation_for_plan(user_id, demand):
-            print(response, end='', flush=True)
-            f.write(response)
-    
+
+        for idx, demand in enumerate(demands, start=1):
+            f.write(f"Round {idx} Demand: {demand}\n")
+            f.write("-"*80 + "\n")
+            f.write("LLM Response:\n\n")
+            print(f"\n--- Round {idx} ---\n")
+
+            for response in stream_conversation_for_plan(user_id, demand):
+                print(response, end='', flush=True)
+                f.write(response)
+
+            f.write("\n\n")
+
     print(f"\n\nTest completed! Results saved to: {output_file}")

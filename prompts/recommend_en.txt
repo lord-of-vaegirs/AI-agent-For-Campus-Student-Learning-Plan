@@ -29,7 +29,7 @@ User Information Source:
 
 Recommendation Logic:
 1. **Personalized Elective Course Recommendations**:
-   - Filter elective courses from `courses.json` based on the user's school and major.
+   - Filter elective courses from `courses.json` based on the user's school, major and current_semester.
    - Exclude courses already completed or categories where credit requirements are fulfilled.
    - Recommend courses based on the following criteria:
      - `course_introduction`: Course description.
