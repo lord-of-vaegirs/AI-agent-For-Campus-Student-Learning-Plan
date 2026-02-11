@@ -35,7 +35,8 @@
       "must_required_courses": [
         {
           "name": "数学分析III",
-          "semester": 3
+          "semester": 3,
+          "credits": 5
         }
       ],
       "credit_gaps": [

@@ -91,7 +91,7 @@
               "course_introduction": "大学物理基础课程，涵盖力学、热学、电磁学等内容",
               "credits": 4,
               "category": "部类核心课",
-              "standard_semester": "2,4",
+              "standard_semester": 4,
               "knowledge": {
                 "数学基础": 1,
                 "编程语言、算法与软件工程": 0,
