@@ -86,13 +86,17 @@ def get_mandatory_roadmap(user_id):
         if college.get("学院名称") == target_school:
             for major in college.get("专业列表", []):
                 if major.get("专业名称") == target_major:
+                    # 获取该专业的必修课类别列表
+                    required_categories = major.get("必修课类别列表", [])
+                    
                     for course in major.get("课程列表", []):
-                        # 将必修课提取到规划中
-                        roadmap.append({
-                            "name": course["name"],
-                            "semester": course.get("standard_semester", 1),
-                            "credits": course.get("credits", 0)
-                        })
+                        # 只将在必修课类别列表中的课程添加到规划中
+                        if course.get("category") in required_categories:
+                            roadmap.append({
+                                "name": course["name"],
+                                "semester": course.get("standard_semester", 1),
+                                "credits": course.get("credits", 0)
+                            })
     
     roadmap.sort(key=lambda x: x["semester"])
     # 同步回用户数据库
