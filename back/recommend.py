@@ -116,7 +116,7 @@ def stream_conversation_for_plan(user_id, demand):
 
     turns_text = f"User: {demand}"
 
-    prompt = (
+    first_prompt = (
         f"{session['base_prompt']}\n\n"
         f"Recent Assistant Replies:\n{recent_assistant_text}\n\n"
         f"Conversation History:\n{turns_text}\n\n"
@@ -179,13 +179,30 @@ def stream_conversation_for_plan(user_id, demand):
 
     # Step 8: Return the streaming response from the LLM and store it
     def stream_and_store():
-        response_chunks = []
-        for chunk in llm_stream_response(prompt):
-            response_chunks.append(chunk)
+        # First request: generate an initial response.
+        first_chunks = []
+        for chunk in llm_stream_response(first_prompt):
+            first_chunks.append(chunk)
+        first_response = "".join(first_chunks).strip()
+
+        # Second request: validate and correct the first response.
+        second_prompt = (
+            f"{session['base_prompt']}\n\n"
+            f"User Demand:\n{demand}\n\n"
+            f"Draft Response:\n{first_response}\n\n"
+            "Validation Request: 请验证第一轮的draft response是否符合回复要求，是否合理准确。\n"
+            "Do not mention any secondary verification in your reply (e.g., \"经过二次验证\").\n\n"
+            "Assistant:"
+        )
+
+        second_chunks = []
+        for chunk in llm_stream_response(second_prompt):
+            second_chunks.append(chunk)
             yield chunk
-        full_response = "".join(response_chunks).strip()
-        if full_response:
-            session["assistant_responses"].append(full_response)
+
+        final_response = "".join(second_chunks).strip()
+        if final_response:
+            session["assistant_responses"].append(final_response)
 
     return stream_and_store()
 
@@ -194,10 +211,10 @@ if __name__ == "__main__":
     # Example usage
     user_id = "user_2023000001"
     demands = [
-        "Based on my profile and the available courses, research projects, and competitions, please provide direct recommendations for: 1) personalized elective courses I should take next semester, 2) research projects that align with my goals, and 3) competitions I should participate in. After your recommendations, ask if I need any clarifications or have other requirements.",
-        "Please narrow down the elective courses to 2 options and explain why they fit my current semester.",
-        "Given my research goal of deep learning, suggest one research project and one competition I should prioritize.",
-        "Provide a brief actionable plan for the next semester based on all the above."
+        "请为我规划一下本学期应该选择什么个性化选修课",
+        "请为我规划一下本学期应该选择什么适合我的科研",
+        "请为我规划一下本学期应该选择什么适合我的竞赛",
+        "请为我规划一下本学期的选择"
     ]
 
     # Create output directory if not exists
