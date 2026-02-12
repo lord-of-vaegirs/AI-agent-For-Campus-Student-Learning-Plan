@@ -40,7 +40,7 @@ def register_user(data):
             "completed_courses": [], "research_done": [], "competitions_done": []
         },
         "remaining_tasks": {"must_required_courses": [], "credit_gaps": []},
-        "path_review": {"is_public": False, "content": "", "citation_count": 0, "current_rank": 0},
+        "path_review": {"is_public": False, "content": "", "like_count": 0, "current_rank": 0},
         "knowledge": {}, "skills": {},
         "total_credits": 0.0,
         "average_grades": 0.0
