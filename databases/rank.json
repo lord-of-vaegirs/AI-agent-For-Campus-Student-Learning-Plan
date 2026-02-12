@@ -1,7 +1,22 @@
 [
     {
-        "user_name":"李华",
-        "like_count": 128, 
-        "current_rank": 5
+        "user_name": "李华",
+        "like_count": 128,
+        "current_rank": 1
+    },
+    {
+        "user_name": "李华",
+        "like_count": 0,
+        "current_rank": 2
+    },
+    {
+        "user_name": "李华",
+        "like_count": 0,
+        "current_rank": 3
+    },
+    {
+        "user_name": "一一",
+        "like_count": 0,
+        "current_rank": 4
     }
 ]
