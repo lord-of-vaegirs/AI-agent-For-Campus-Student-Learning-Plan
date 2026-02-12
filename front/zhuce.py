@@ -54,9 +54,11 @@ if st.session_state.step == "login":
             st.session_state.step = "registration"
             st.rerun()
 
-# --- 4. 注册页面 (保持不变) ---
+# --- 4. 注册页面 ---
 elif st.session_state.step == "registration":
     st.title("📝 用户注册")
+    
+    # 放置注册表单
     with st.form("registration_form_main"):
         c1, c2 = st.columns(2)
         with c1:
@@ -67,17 +69,34 @@ elif st.session_state.step == "registration":
             school = st.selectbox("学院", ["信息学院", "高瓴人工智能学院", "理学院"])
             major = st.text_input("专业 *", placeholder="如：计算机科学与技术")
             target = st.selectbox("最终目标", ["保研", "出国深造", "本科就业", "考研"])
+        
         sem = st.slider("当前所处学期", 1, 8, 1)
+        
+        # 注册提交按钮
         submit_reg = st.form_submit_button("完成注册并进入系统", type="primary")
+        
         if submit_reg:
             if name and sid and major:
-                reg_payload = {"name": name, "student_id": sid, "enrollment_year": year, "school": school, "major": major, "target": target, "current_semester": sem}
+                reg_payload = {
+                    "name": name, "student_id": sid, "enrollment_year": year, 
+                    "school": school, "major": major, "target": target, 
+                    "current_semester": sem
+                }
                 success, res = register_user(reg_payload)
                 if success:
                     st.session_state.user_id = res
-                    st.session_state.step = "dashboard"; st.rerun()
-                else: st.error(res)
-            else: st.error("请填写必填项")
+                    st.session_state.step = "dashboard"
+                    st.rerun()
+                else:
+                    st.error(res)
+            else:
+                st.error("请填写必填项")
+
+    # --- 🚩 新增：在表单外部添加返回按钮 ---
+    st.write("") # 留点间距
+    if st.button("已有账号？返回登录", use_container_width=True):
+        st.session_state.step = "login"
+        st.rerun()
 
 # --- 5. 系统核心主页面 (Dashboard) ---
 elif st.session_state.step == "dashboard":
