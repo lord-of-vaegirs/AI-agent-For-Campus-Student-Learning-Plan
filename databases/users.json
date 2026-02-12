@@ -152,7 +152,7 @@
     },
     "path_review": {
       "is_public": true,
-      "content": "...",
+      "content": "...2023200001评价12",
       "like_count": 128,
       "current_rank": 1
     },
@@ -213,7 +213,7 @@
       "is_public": false,
       "content": "",
       "like_count": 0,
-      "current_rank": 2
+      "current_rank": 3
     },
     "knowledge": {
       "数学基础": 18.5,
@@ -378,7 +378,7 @@
       "is_public": false,
       "content": "",
       "like_count": 0,
-      "current_rank": 3
+      "current_rank": 4
     },
     "knowledge": {
       "数学基础": 19.5,
@@ -542,8 +542,8 @@
     "path_review": {
       "is_public": false,
       "content": "",
-      "like_count": 0,
-      "current_rank": 4
+      "like_count": 2,
+      "current_rank": 2
     },
     "knowledge": {
       "数学基础": 18.5,
