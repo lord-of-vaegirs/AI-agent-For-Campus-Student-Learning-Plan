@@ -153,7 +153,7 @@
     "path_review": {
       "is_public": true,
       "content": "...",
-      "citation_count": 128,
+      "like_count": 128,
       "current_rank": 5
     },
     "knowledge": {
@@ -212,7 +212,7 @@
     "path_review": {
       "is_public": false,
       "content": "",
-      "citation_count": 0,
+      "like_count": 0,
       "current_rank": 0
     },
     "knowledge": {
@@ -377,7 +377,7 @@
     "path_review": {
       "is_public": false,
       "content": "",
-      "citation_count": 0,
+      "like_count": 0,
       "current_rank": 0
     },
     "knowledge": {
@@ -542,7 +542,7 @@
     "path_review": {
       "is_public": false,
       "content": "",
-      "citation_count": 0,
+      "like_count": 0,
       "current_rank": 0
     },
     "knowledge": {

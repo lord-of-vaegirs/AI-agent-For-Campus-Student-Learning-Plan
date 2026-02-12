@@ -38,7 +38,7 @@ def record_comment(user_id, comment):
         user_info["path_review"] = {
             "is_public": False,
             "content": comment,
-            "citation_count": 0,
+            "like_count": 0,
             "current_rank": 0
         }
     else:
