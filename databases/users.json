@@ -152,7 +152,7 @@
     },
     "path_review": {
       "is_public": true,
-      "content": "...2023200001评价12",
+      "content": "2023200001消失",
       "like_count": 128,
       "current_rank": 1
     },
@@ -248,6 +248,16 @@
           "grade": 3.9,
           "semester": 1,
           "category": "已修"
+        },
+        {
+          "name": "Web安全",
+          "grade": 3.7,
+          "semester": 4
+        },
+        {
+          "name": "普通物理B",
+          "grade": 4.0,
+          "semester": 4
         }
       ],
       "research_done": [
@@ -261,6 +271,11 @@
           "name": "国际大学生程序设计竞赛 (ICPC)",
           "award": "铜奖",
           "complete_semester": 1
+        },
+        {
+          "name": "大学生创新实验设计",
+          "award": "结题优秀负责人",
+          "complete_semester": 3
         }
       ]
     },
@@ -376,25 +391,25 @@
     },
     "path_review": {
       "is_public": false,
-      "content": "",
+      "content": "我是2022200002",
       "like_count": 0,
       "current_rank": 4
     },
     "knowledge": {
-      "数学基础": 19.5,
+      "数学基础": 16.0,
       "编程语言、算法与软件工程": 0.0,
       "计算机系统与网络": 0.0,
       "数据与智能": 0.0,
-      "网络安全与信息保护": 0.0
+      "网络安全与信息保护": 7.4
     },
     "skills": {
-      "系统化思维": 0.0,
-      "形式化逻辑与数学迁移": 0.0,
-      "工具化与自动化本能": 0.0,
-      "信息检索与数据处理": 0.0,
-      "异常处理与边界意识": 0.0
+      "系统化思维": 8.0,
+      "形式化逻辑与数学迁移": 8.0,
+      "工具化与自动化本能": 6.0,
+      "信息检索与数据处理": 6.0,
+      "异常处理与边界意识": 7.0
     },
-    "total_credits": 5.0,
+    "total_credits": 6.0,
     "average_grades": 3.9
   },
   "user_2024200002": {

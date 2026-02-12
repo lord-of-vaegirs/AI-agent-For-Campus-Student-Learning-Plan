@@ -207,25 +207,29 @@ elif st.session_state.step == "dashboard":
             st.write(f"❤️ 累计获得点赞：**{path_review.get('like_count', 0)}**")
             st.write(f"🏆 当前影响力排名：**No.{path_review.get('current_rank', '-')}**")
 
-        # --- 修复 1: 评价提交后清空框 ---
+        # 2. 修改评价的部分
         with st.expander("✍️ 撰写/修改我的全路径评价"):
-            # 使用 version 来强制刷新组件
-            new_comment = st.text_area(
+            # 🚩 关键修改：key 绑定版本号，且不设置固定的 value
+            new_comment_text = st.text_area(
                 "分享你的避坑经验或保研/就业心得：", 
-                value=path_review.get('content', ""), 
-                height=150,
-                key=f"comment_input_{st.session_state.comment_version}"
+                placeholder="在此输入新的内容",
+                height=150, 
+                key=f"my_comment_box_{st.session_state.comment_version}" 
             )
+            
             if st.button("提交评价"):
-                if record_comment(st.session_state.user_id, new_comment):
-                    st.success("评价已存入！")
-                    # 改变 Key 触发重置
-                    st.session_state.comment_version += 1
-                    generate_comment_rank_list()
-                    st.rerun()
+                if new_comment_text:
+                    if record_comment(st.session_state.user_id, new_comment_text):
+                        # 🚩 成功后版本号+1，强制清空输入框
+                        st.session_state.comment_version += 1
+                        st.success("评价已存入！正在重新计算排名...")
+                        generate_comment_rank_list()
+                        st.rerun()
+                else:
+                    st.warning("内容不能为空")
 
         st.divider()
-        st.subheader("🤝 AI 路径匹配 (查看相似先行者的全路径)")
+        st.subheader("🤝 AI 路径匹配")
         
         if st.button("🔍 开始匹配相似路径", type="primary"):
             with st.spinner("AI 正在分析全库路径..."):
@@ -317,7 +321,7 @@ elif st.session_state.step == "recommendation":
         if st.button("🗑️ 清空对话历史"): st.session_state.messages = []; st.rerun()
     for message in st.session_state.messages:
         with st.chat_message(message["role"]): st.markdown(message["content"])
-    if prompt := st.chat_input("询问您的修读方案..."):
+    if prompt := st.chat_input("您可以问我：'根据我的背景，下学期选什么课好？' 或 '推荐一些适合我的科研项目'"):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"): st.markdown(prompt)
         with st.chat_message("assistant"):
