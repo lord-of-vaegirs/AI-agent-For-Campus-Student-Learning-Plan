@@ -11,7 +11,7 @@
 - 学生所属学院和专业决定了其必修课和个性化选修课的选择范围。
 - 学生需在四年内完成所有必修课、满足个性化选修课的学分要求，并参与适量的科研和竞赛以满足毕业条件。
 - 相关数据存储在以下数据库中：
-  - `course_requirement.json`：个性化选修课的类别及学分要求。
+  - `course_requirement.json`：必修课和个性化选修课的类别及学分要求。
   - `courses.json`：学院和专业对应的课程列表，包括必修课和个性化选修课。
   - `research.json`：学院和专业对应的科研项目列表。
   - `contests.json`：学院和专业对应的竞赛项目列表。
@@ -26,7 +26,7 @@
     - `competitions_done`：已完成的竞赛项目及奖项。
   - `remaining_tasks`：
     - `must_required_courses`：未完成的必修课。
-    - `credit_gaps`：个性化选修课的学分缺口。
+    - `optional_course_gap`：个性化选修课各类别的课程缺口。
   - `knowledge`：知识点掌握程度。
   - `skills`：能力维度掌握程度。
   - `total_credits`：总学分。
@@ -111,7 +111,7 @@ You are helping a student from Renmin University of China with their academic pl
     - `competitions_done`: Completed competitions and awards.
   - `remaining_tasks`:
     - `must_required_courses`: Required courses not yet completed.
-    - `credit_gaps`: Credit gaps for each category of personalized electives.
+    - `optional_course_gap`: Course gaps for each category of personalized electives.
   - `knowledge`: Proficiency across knowledge dimensions.
   - `skills`: Proficiency across skill dimensions.
   - `total_credits`: Total credits earned.
@@ -120,7 +120,7 @@ You are helping a student from Renmin University of China with their academic pl
 [Recommendation Logic]
 1. Personalized Elective Course Recommendations:
    - Filter personalized elective courses in `courses.json` for the user's school and major that are offered in the current semester.
-   - Exclude courses already completed and categories where credit requirements have been fulfilled.
+  - Exclude courses already completed and categories where course gaps have been fulfilled.
    - Recommend courses based on the following criteria:
      - `course_introduction`: Course description.
      - `credits`: Course credits.

@@ -23,7 +23,7 @@ You are helping a student from Renmin University of China with their academic pl
     - `competitions_done`: Completed competitions and awards.
   - `remaining_tasks`:
     - `must_required_courses`: Required courses not yet completed.
-    - `credit_gaps`: Credit gaps for each category of personalized electives.
+    - `optional_course_gap`: Course gaps for each category of personalized electives.
   - `knowledge`: Proficiency across knowledge dimensions.
   - `skills`: Proficiency across skill dimensions.
   - `total_credits`: Total credits earned.
@@ -32,7 +32,7 @@ You are helping a student from Renmin University of China with their academic pl
 [Recommendation Logic]
 1. Personalized Elective Course Recommendations:
    - Filter personalized elective courses in `courses.json` for the user's school and major that are offered in the current semester.
-   - Exclude courses already completed and categories where credit requirements have been fulfilled.
+  - Exclude courses already completed and categories where course gaps have been fulfilled.
    - Recommend courses based on the following criteria:
      - `course_introduction`: Course description.
      - `credits`: Course credits.
