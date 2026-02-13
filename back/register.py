@@ -346,7 +346,25 @@ def update_current_semester(user_id):
     return current_semester
 
 def graduate_warning(user_id):
-    pass
+    users_all = get_db_data("users.json")
+    user = users_all.get(user_id)
+    if not user:
+        return [False]
+
+    current_semester = int(user.get("academic_progress", {}).get("current_semester", 0))
+    if current_semester not in (7, 8):
+        return [False]
+
+    remaining = user.get("remaining_tasks", {})
+    must_required = remaining.get("must_required_courses", [])
+    credit_gaps = remaining.get("credit_gaps", [])
+
+    gaps_not_done = [item for item in credit_gaps if float(item.get("missing_credits", 0)) != 0]
+
+    if not must_required and not gaps_not_done:
+        return [False]
+
+    return [True, must_required, gaps_not_done]
 
 # if __name__ == "__main__":
 #     get_mandatory_roadmap("计算机科学与技术")
