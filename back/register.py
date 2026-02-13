@@ -40,7 +40,7 @@ def register_user(data):
             "current_semester": int(data['current_semester']),
             "completed_courses": [], "research_done": [], "competitions_done": []
         },
-        "remaining_tasks": {"must_required_courses": [], "credit_gaps": []},
+        "remaining_tasks": {"must_required_courses": [], "optional_course_gap": []},
         "path_review": {"is_public": False, "content": "", "like_count": 0, "current_rank": 0},
         "knowledge": {}, "skills": {},
         "total_credits": 0.0,
@@ -72,7 +72,7 @@ def register_user(data):
         if college.get("学院名称") == data["school"]:
             for major_item in college.get("专业列表", []):
                 if major_item.get("专业名称") == data["major"]:
-                    new_user["remaining_tasks"]["credit_gaps"] = major_item.get("个性化选修课课程要求", [])
+                    new_user["remaining_tasks"]["optional_course_gap"] = major_item.get("个性化选修课课程要求", [])
                     break
 
     try:
@@ -236,7 +236,7 @@ def update_user_progress(user_id, payload):
 
         # 7. 更新 remaining_tasks (必修课与个性化选修课学分缺口)
         if "remaining_tasks" not in user:
-            user["remaining_tasks"] = {"must_required_courses": [], "credit_gaps": []}
+            user["remaining_tasks"] = {"must_required_courses": [], "optional_course_gap": []}
 
         # 必修课：已完成且属于必修类别时，从清单中移除
         required_categories = set()
@@ -266,9 +266,12 @@ def update_user_progress(user_id, payload):
                 )
             ]
 
-        # 个性化选修：按课程类别所属大类扣减缺口学分，最低不小于 0
-        credit_gaps = user["remaining_tasks"].get("credit_gaps", [])
-        credit_gap_map = {cg.get("category"): cg for cg in credit_gaps if cg.get("category")}
+        # 个性化选修：根据课程所属类别匹配课程要求类别，course_gap 逐门课程递减，最低不小于 0
+        optional_gaps = user["remaining_tasks"].get("optional_course_gap", [])
+
+        def split_requirement_categories(category_text):
+            parts = [p.strip() for p in category_text.split("/") if p.strip()]
+            return parts
 
         for c_done in user["academic_progress"].get("completed_courses", []):
             name = c_done.get("name")
@@ -276,16 +279,20 @@ def update_user_progress(user_id, payload):
                 continue
             course_info = course_lookup[name]
             course_category = course_info.get("category")
-            parent_category = elective_subcategory_map.get(course_category)
-            if not parent_category:
+            if not course_category:
                 continue
-            gap_item = credit_gap_map.get(parent_category)
-            if not gap_item:
-                continue
-            credits = float(course_info.get("credits", 0))
-            gap_item["missing_credits"] = max(0, float(gap_item.get("missing_credits", 0)) - credits)
 
-        user["remaining_tasks"]["credit_gaps"] = list(credit_gap_map.values())
+            for gap_item in optional_gaps:
+                req_category = gap_item.get("category", "")
+                if not req_category:
+                    continue
+                req_parts = split_requirement_categories(req_category)
+                if course_category in req_parts:
+                    current_gap = int(gap_item.get("course_gap", 0))
+                    gap_item["course_gap"] = max(0, current_gap - 1)
+                    break
+
+        user["remaining_tasks"]["optional_course_gap"] = optional_gaps
 
         # 8. 更新汇总统计字段 (GPA & 总学分)
         user["total_credits"] = total_credits
@@ -357,14 +364,14 @@ def graduate_warning(user_id):
 
     remaining = user.get("remaining_tasks", {})
     must_required = remaining.get("must_required_courses", [])
-    credit_gaps = remaining.get("credit_gaps", [])
+    optional_gaps = remaining.get("optional_course_gap", [])
 
-    gaps_not_done = [item for item in credit_gaps if float(item.get("missing_credits", 0)) != 0]
+    gaps_not_done = [item for item in optional_gaps if int(item.get("course_gap", 0)) != 0]
 
     if not must_required and not gaps_not_done:
         return [False]
 
-    return [True, must_required, gaps_not_done]
+    return [True, must_required, optional_gaps]
 
 # if __name__ == "__main__":
 #     get_mandatory_roadmap("计算机科学与技术")

@@ -154,14 +154,36 @@
           "credits": 3
         }
       ],
-      "credit_gaps": [
+      "optional_course_gap": [
         {
-          "category": "实践课程",
-          "missing_credits": 12
+            "category":"计算机类 -10 计算机类专业实践",
+            "course_gap":1,
+            "description":"在个性化选修课程模块【计算机类 -10 计算机类专业实践】中至少选修 1 门课程（《程序设计实践》除外）；"
         },
         {
-          "category": "模块限选课",
-          "missing_credits": 8
+            "category":"计算机类 -11 复杂工程实践",
+            "course_gap":1,
+            "description":"在个性化选修课程模块【计算机类 -11 复杂工程实践】中至少选修1 门课程。"
+        },
+        {
+            "category":"计算机类 -12 计算机理论基础",
+            "course_gap":1,
+            "description":"在个性化选修课程模块【计算机类 -12 计算机理论基础】中至少选 1 门课；"
+        },
+        {
+            "category":"计算机类 -13 系统与网络",
+            "course_gap":1,
+            "description":"在个性化选修课程模块【计算机类 -13 系统与网络】中至少选 1门课；"
+        },
+        {
+            "category":"计算机类 -14 人工智能 / 计算机类 -15大数据技术 / 计算机类 -16 多媒体技术",
+            "course_gap":1,
+            "description":"在个性化选修课程模块【计算机类 -14 人工智能】【计算机类 -15大数据技术】或【计算机类 -16 多媒体技术】或数据科学与大数据技术专业必修课中至少选修 1 门课程；"
+        },
+        {
+            "category":"计算机类 -18 信息安全技术 / 计算机类 -19 信息安全应用",
+            "course_gap":1,
+            "description":"在个性化选修课程模块【计算机类 -18 信息安全技术】或【计算机类 -19 信息安全应用】或信息安全专业必修课中至少选修 1 门课程。"
         }
       ]
     },
@@ -222,7 +244,7 @@
           "credits": 5
         }
       ],
-      "credit_gaps": []
+      "optional_course_gap": []
     },
     "path_review": {
       "is_public": false,
@@ -402,7 +424,7 @@
           "credits": 3
         }
       ],
-      "credit_gaps": []
+      "optional_course_gap": []
     },
     "path_review": {
       "is_public": false,
@@ -567,7 +589,7 @@
           "credits": 3
         }
       ],
-      "credit_gaps": []
+      "optional_course_gap": []
     },
     "path_review": {
       "is_public": false,
@@ -761,7 +783,7 @@
           "credits": 3
         }
       ],
-      "credit_gaps": []
+      "optional_course_gap": []
     },
     "path_review": {
       "is_public": false,
