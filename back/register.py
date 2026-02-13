@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime, timedelta, timezone
 
 # 定义数据库目录
 DB_DIR = os.path.join(os.path.dirname(__file__), "..", "databases")
@@ -238,3 +239,48 @@ def update_user_progress(user_id, payload):
     except Exception as e:
         print(f"Update Error: {e}")
         return False
+    
+
+def update_current_semester(user_id):
+    users_all = get_db_data("users.json")
+    user = users_all.get(user_id)
+    if not user:
+        return False
+
+    enrollment_year = int(user.get("profile", {}).get("enrollment_year", 0))
+    if enrollment_year <= 0:
+        return False
+
+    now = datetime.now(timezone(timedelta(hours=8)))
+    year = now.year
+    month = now.month
+
+    if year < enrollment_year:
+        current_semester = 1
+    elif year == enrollment_year and month == 9:
+        current_semester = 1
+    else:
+        if month in (10, 11, 12, 1, 2, 3):
+            period_type = 0  # Oct-Mar
+            period_year = year if month >= 10 else year - 1
+        else:
+            period_type = 1  # Apr-Sep
+            period_year = year - 1
+
+        period_index = (period_year - enrollment_year) * 2 + period_type
+        current_semester = period_index + 2
+
+    if current_semester < 1:
+        current_semester = 1
+    elif current_semester > 8:
+        current_semester = 8
+
+    if "academic_progress" not in user:
+        user["academic_progress"] = {}
+    user["academic_progress"]["current_semester"] = int(current_semester)
+
+    users_all[user_id] = user
+    with open(os.path.join(DB_DIR, "users.json"), "w", encoding="utf-8") as f:
+        json.dump(users_all, f, ensure_ascii=False, indent=2)
+
+    return current_semester
