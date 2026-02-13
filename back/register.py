@@ -58,6 +58,23 @@ def register_user(data):
                     if tag_key in new_user:
                         new_user[tag_key] = {t: 0.0 for t in major_tags}
 
+    # 2. 初始化必修课地图与个性化选修课要求
+    courses_data = get_db_data("courses.json")
+    for college in courses_data.get("学院列表", []):
+        if college.get("学院名称") == data["school"]:
+            for major_item in college.get("专业列表", []):
+                if major_item.get("专业名称") == data["major"]:
+                    new_user["remaining_tasks"]["must_required_courses"] = major_item.get("course_map", [])
+                    break
+
+    requirements_data = get_db_data("course_requirement.json")
+    for college in requirements_data.get("学院列表", []):
+        if college.get("学院名称") == data["school"]:
+            for major_item in college.get("专业列表", []):
+                if major_item.get("专业名称") == data["major"]:
+                    new_user["remaining_tasks"]["credit_gaps"] = major_item.get("个性化选修课课程要求", [])
+                    break
+
     try:
         users = get_db_data("users.json")
         if not isinstance(users, dict): users = {}
@@ -70,43 +87,33 @@ def register_user(data):
     except Exception as e:
         return False, str(e)
 
-def get_mandatory_roadmap(user_id):
-    """根据专业获取必修课表"""
-    users = get_db_data("users.json")
-    user = users.get(user_id)
-    if not user: return []
-    
-    target_school = user["profile"]["school"]
-    target_major = user["profile"]["major"]
-    
+def get_mandatory_roadmap(major):
+    """
+    根据专业生成必修课地图并写入 courses.json 的 course_map
+    目前该函数只允许开发者使用
+    """
     courses_data = get_db_data("courses.json")
     roadmap = []
-    
-    # 正确遍历你提供的字典嵌套结构
+
     for college in courses_data.get("学院列表", []):
-        if college.get("学院名称") == target_school:
-            for major in college.get("专业列表", []):
-                if major.get("专业名称") == target_major:
-                    # 获取该专业的必修课类别列表
-                    required_categories = major.get("必修课类别列表", [])
-                    
-                    for course in major.get("课程列表", []):
-                        # 只将在必修课类别列表中的课程添加到规划中
-                        if course.get("category") in required_categories:
-                            roadmap.append({
-                                "name": course["name"],
-                                "semester": course.get("standard_semester", 1),
-                                "credits": course.get("credits", 0)
-                            })
-    
-    roadmap.sort(key=lambda x: x["semester"])
-    # 同步回用户数据库
-    user["remaining_tasks"]["must_required_courses"] = roadmap
-    users[user_id] = user
-    with open(os.path.join(DB_DIR, "users.json"), "w", encoding="utf-8") as f:
-        json.dump(users, f, ensure_ascii=False, indent=2)
-        
-    return roadmap
+        for major_item in college.get("专业列表", []):
+            if major_item.get("专业名称") == major:
+                required_categories = major_item.get("必修课类别列表", [])
+
+                for course in major_item.get("课程列表", []):
+                    if course.get("category") in required_categories:
+                        roadmap.append({
+                            "name": course.get("name", ""),
+                            "semester": course.get("standard_semester", 1),
+                            "credits": course.get("credits", 0)
+                        })
+
+                roadmap.sort(key=lambda x: x["semester"])
+                major_item["course_map"] = roadmap
+                break
+
+    with open(os.path.join(DB_DIR, "courses.json"), "w", encoding="utf-8") as f:
+        json.dump(courses_data, f, ensure_ascii=False, indent=2)
 
 def get_selection_options(user_id):
     """获取该专业下可选的课程、科研和竞赛"""
@@ -227,11 +234,64 @@ def update_user_progress(user_id, payload):
                         if sd in user["skills"]:
                             user["skills"][sd] += float(val)
 
-        # 7. 更新汇总统计字段 (GPA & 总学分)
+        # 7. 更新 remaining_tasks (必修课与个性化选修课学分缺口)
+        if "remaining_tasks" not in user:
+            user["remaining_tasks"] = {"must_required_courses": [], "credit_gaps": []}
+
+        # 必修课：已完成且属于必修类别时，从清单中移除
+        required_categories = set()
+        elective_subcategory_map = {}
+        major_name = user.get("profile", {}).get("major")
+        school_name = user.get("profile", {}).get("school")
+        courses_data = get_db_data("courses.json")
+        for college in courses_data.get("学院列表", []):
+            if college.get("学院名称") == school_name:
+                for major in college.get("专业列表", []):
+                    if major.get("专业名称") == major_name:
+                        required_categories = set(major.get("必修课类别列表", []))
+                        for item in major.get("个性化选修课类别从属", []):
+                            parent = item.get("category")
+                            for sub in item.get("subcategories", []):
+                                elective_subcategory_map[sub] = parent
+                        break
+
+        completed_names = {c.get("name") for c in user["academic_progress"].get("completed_courses", []) if c.get("name")}
+        must_required = user["remaining_tasks"].get("must_required_courses", [])
+        if required_categories and must_required:
+            user["remaining_tasks"]["must_required_courses"] = [
+                item for item in must_required
+                if not (
+                    item.get("name") in completed_names
+                    and course_lookup.get(item.get("name"), {}).get("category") in required_categories
+                )
+            ]
+
+        # 个性化选修：按课程类别所属大类扣减缺口学分，最低不小于 0
+        credit_gaps = user["remaining_tasks"].get("credit_gaps", [])
+        credit_gap_map = {cg.get("category"): cg for cg in credit_gaps if cg.get("category")}
+
+        for c_done in user["academic_progress"].get("completed_courses", []):
+            name = c_done.get("name")
+            if not name or name not in course_lookup:
+                continue
+            course_info = course_lookup[name]
+            course_category = course_info.get("category")
+            parent_category = elective_subcategory_map.get(course_category)
+            if not parent_category:
+                continue
+            gap_item = credit_gap_map.get(parent_category)
+            if not gap_item:
+                continue
+            credits = float(course_info.get("credits", 0))
+            gap_item["missing_credits"] = max(0, float(gap_item.get("missing_credits", 0)) - credits)
+
+        user["remaining_tasks"]["credit_gaps"] = list(credit_gap_map.values())
+
+        # 8. 更新汇总统计字段 (GPA & 总学分)
         user["total_credits"] = total_credits
         user["average_grades"] = round(total_grade_points / total_credits, 2) if total_credits > 0 else 0.0
 
-        # 8. 保存回 JSON
+        # 9. 保存回 JSON
         users_all[user_id] = user
         with open(os.path.join(DB_DIR, "users.json"), "w", encoding="utf-8") as f:
             json.dump(users_all, f, ensure_ascii=False, indent=2)
@@ -284,3 +344,9 @@ def update_current_semester(user_id):
         json.dump(users_all, f, ensure_ascii=False, indent=2)
 
     return current_semester
+
+def graduate_warning(user_id):
+    pass
+
+# if __name__ == "__main__":
+#     get_mandatory_roadmap("计算机科学与技术")
