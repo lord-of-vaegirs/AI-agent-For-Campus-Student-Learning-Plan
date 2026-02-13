@@ -15,6 +15,16 @@
           "grade": 4.0,
           "semester": 2,
           "category": "部类基础课"
+        },
+        {
+          "name": "高等数学Ⅰ",
+          "grade": 4.0,
+          "semester": 1
+        },
+        {
+          "name": "程序设计",
+          "grade": 3.7,
+          "semester": 1
         }
       ],
       "research_done": [
@@ -27,6 +37,11 @@
         {
           "name": "国际大学生程序设计竞赛 (ICPC)",
           "award": "银奖",
+          "complete_semester": 2
+        },
+        {
+          "name": "全国大学生信息安全竞赛（作品赛）",
+          "award": "全国银奖",
           "complete_semester": 2
         }
       ]
@@ -157,21 +172,21 @@
       "current_rank": 1
     },
     "knowledge": {
-      "数学基础": 0,
-      "编程语言、算法与软件工程": 0,
-      "计算机系统与网络": 0,
-      "数据与智能": 0,
-      "网络安全与信息保护": 0
+      "数学基础": 20.0,
+      "编程语言、算法与软件工程": 14.8,
+      "计算机系统与网络": 0.0,
+      "数据与智能": 0.0,
+      "网络安全与信息保护": 0.0
     },
     "skills": {
-      "系统化思维": 0,
-      "形式化逻辑与数学迁移": 0,
-      "工具化与自动化本能": 0,
-      "信息检索与数据处理": 0,
-      "异常处理与边界意识": 0
+      "系统化思维": 8.0,
+      "形式化逻辑与数学迁移": 8.0,
+      "工具化与自动化本能": 7.0,
+      "信息检索与数据处理": 5.0,
+      "异常处理与边界意识": 9.0
     },
-    "total_credits": 30,
-    "average_grades": 3.8
+    "total_credits": 9.0,
+    "average_grades": 3.87
   },
   "user_2022200001": {
     "profile": {
@@ -213,7 +228,7 @@
       "is_public": false,
       "content": "",
       "like_count": 0,
-      "current_rank": 3
+      "current_rank": 4
     },
     "knowledge": {
       "数学基础": 18.5,
@@ -392,8 +407,8 @@
     "path_review": {
       "is_public": false,
       "content": "我是2022200002",
-      "like_count": 0,
-      "current_rank": 4
+      "like_count": 1,
+      "current_rank": 3
     },
     "knowledge": {
       "数学基础": 16.0,

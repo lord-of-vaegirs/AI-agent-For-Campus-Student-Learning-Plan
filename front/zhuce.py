@@ -251,7 +251,7 @@ elif st.session_state.step == "dashboard":
         st.subheader("🤝 AI 路径匹配")
         
         if st.button("🔍 开始匹配相似路径", type="primary"):
-            with st.spinner("AI 正在分析全库路径..."):
+            with st.spinner("AI 正在分析路径..."):
                 st.session_state.matched_uids = stream_conversation_for_match(st.session_state.user_id)
         
         # --- 修复 2: 完整路径可视化展示 ---
@@ -279,7 +279,7 @@ elif st.session_state.step == "dashboard":
                 with st.container(border=True):
                     header_col, like_col = st.columns([5, 1])
                     with header_col:
-                        st.markdown(f"### 👤 {peer['profile']['name']} ({peer['profile']['major']})")
+                        st.markdown(f"### 🎯 目标：{peer['profile']['target']} 专业：{peer['profile']['major']}")
                     with like_col:
                         if st.button(f"👍 {peer.get('path_review', {}).get('like_count', 0)}", key=f"like_{m_uid}"):
                             if add_like(m_uid): st.rerun()
@@ -334,18 +334,66 @@ elif st.session_state.step == "dashboard":
 
 # --- 6. 推荐页面 (保持原有流式对话逻辑) ---
 elif st.session_state.step == "recommendation":
+    # 同样需要获取最新的用户信息来展示问候语
+    all_users = get_db_data("users.json")
+    user = all_users.get(st.session_state.user_id)
+
     st.title("🤖 AI 智能学业规划导师")
+    
+    # 🚩 新增：个性化问候与功能指引
+    st.markdown(f"#### 您好，{user['profile']['name']}！")
+    st.markdown(f"""
+    我是您的专属学业数字助手。我已经调取了您的**专业培养方案、当前绩点、已点亮的技能树**以及您设定的**{user['profile']['target']}**目标。
+    
+    您可以向我咨询任何关于选课、竞赛、科研或职业发展的疑问，我会根据您的个人实际情况给出量身定制的规划建议。
+    """)
+    st.divider()
+
+    # 侧边栏辅助功能
     with st.sidebar:
-        if st.button("⬅️ 返回主面板"): st.session_state.step = "dashboard"; st.rerun()
-        if st.button("🗑️ 清空对话历史"): st.session_state.messages = []; st.rerun()
+        if st.button("⬅️ 返回主面板"):
+            st.session_state.step = "dashboard"
+            st.rerun()
+        if st.button("🗑️ 清空对话历史"):
+            st.session_state.messages = []
+            st.rerun()
+
+    # 展示历史消息
     for message in st.session_state.messages:
-        with st.chat_message(message["role"]): st.markdown(message["content"])
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
+
+    # 聊天输入框
     if prompt := st.chat_input("您可以问我：'根据我的背景，下学期选什么课好？' 或 '推荐一些适合我的科研项目'"):
+        # 1. 展示并在状态中存储用户消息
         st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"): st.markdown(prompt)
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+# 2. 调用后端流式接口并展示 AI 回复
         with st.chat_message("assistant"):
+            status_placeholder = st.empty()
+            status_placeholder.info("🔍 系统正在根据您的情况做出判断，请稍等...")
+
             try:
-                res_gen = stream_conversation_for_plan(st.session_state.user_id, prompt)
-                full_res = st.write_stream(res_gen)
-                st.session_state.messages.append({"role": "assistant", "content": full_res})
-            except Exception as e: st.error(f"对话出错：{str(e)}")
+                response_generator = stream_conversation_for_plan(st.session_state.user_id, prompt)
+                
+                # ✅ 修复：使用列表作为 flag，避免使用 nonlocal 报错
+                container = {"first_chunk_received": False}
+                
+                def wrapped_generator():
+                    for chunk in response_generator:
+                        if not container["first_chunk_received"]:
+                            status_placeholder.empty()  # 收到第一个字，清空“请稍等”
+                            container["first_chunk_received"] = True
+                        yield chunk
+
+                # 使用 st.write_stream 渲染
+                full_response = st.write_stream(wrapped_generator())
+                
+                # 3. 将完整回复存入历史记录
+                st.session_state.messages.append({"role": "assistant", "content": full_response})
+            
+            except Exception as e:
+                status_placeholder.empty()
+                st.error(f"对话出错：{str(e)}")
