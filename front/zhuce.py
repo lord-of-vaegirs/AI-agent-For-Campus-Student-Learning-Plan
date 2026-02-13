@@ -213,16 +213,48 @@ elif st.session_state.step == "dashboard":
             fig_s.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, max(values)+20 if values else 100])), showlegend=False)
             st.plotly_chart(fig_s, use_container_width=True)
 
+# --- TAB 4: 必修地图 ---
     with tab_map:
         st.subheader("🗺️ 专业必修课路线图")
-        roadmap = get_mandatory_roadmap(st.session_state.user_id)
-        if roadmap:
+
+        # 1. 获取当前用户的专业和学院信息
+        user_major = user['profile'].get('major')
+        user_school = user['profile'].get('school')
+
+        # 2. 直接读取课程数据库
+        courses_db = get_db_data("courses.json")
+        
+        # 3. 在前端逻辑中查找对应的 course_map
+        target_roadmap = []
+        
+        # 深入 JSON 树状结构查找
+        for college in courses_db.get("学院列表", []):
+            if college.get("学院名称") == user_school:
+                for major_item in college.get("专业列表", []):
+                    if major_item.get("专业名称") == user_major:
+                        # 🚩 核心逻辑：直接读取后端已经生成好的 course_map 字段
+                        target_roadmap = major_item.get("course_map", [])
+                        break
+        
+        # 4. 渲染地图
+        if target_roadmap:
+            # 确保按学期排序
+            target_roadmap.sort(key=lambda x: x.get("semester", 1))
+
+            # 遍历 1-8 学期展示
             for s in range(1, 9):
-                s_courses = [c for c in roadmap if c['semester'] == s]
+                s_courses = [c for c in target_roadmap if int(c.get('semester', 0)) == s]
+                
                 if s_courses:
-                    st.markdown(f"**第 {s} 学期**")
+                    st.markdown(f"#### 📅 第 {s} 学期")
+                    # 动态创建列，让课程卡片横向排列
                     cols = st.columns(len(s_courses))
-                    for i, c in enumerate(s_courses): cols[i].success(f"{c['name']}")
+                    for i, c in enumerate(s_courses):
+                        # 使用 success 样式的绿色小卡片
+                        cols[i].success(f"**{c['name']}**  \n({c.get('credits', 0)} 学分)")
+                    st.divider() # 学期见分割线
+        else:
+            st.warning("⚠️ 暂无地图数据。请确保管理员已为该专业生成 course_map。")
 
     # --- 🚩 TAB 5: 路径匹配与复盘 (深度美化版) ---
     with tab_match:
