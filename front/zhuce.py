@@ -14,7 +14,8 @@ if back_path not in sys.path:
 try:
     from register import (
         register_user, login_user, get_mandatory_roadmap, 
-        get_selection_options, update_user_progress, get_db_data
+        get_selection_options, update_user_progress, get_db_data,
+        update_current_semester
     )
     from recommend import stream_conversation_for_plan 
     # 🚩 新增：导入社交与匹配相关函数
@@ -35,7 +36,7 @@ if "messages" not in st.session_state: st.session_state.messages = []
 # 🚩 新增：存储匹配结果，避免刷新时消失
 if "matched_uids" not in st.session_state: st.session_state.matched_uids = []
 if 'comment_version' not in st.session_state: st.session_state.comment_version = 0
-# --- 3. 登录页面 (保持不变) ---
+# --- 3. 登录页面 ---
 if st.session_state.step == "login":
     st.title("🔐 智航 - 登录系统")
     col_l, _ = st.columns([1, 2])
@@ -45,10 +46,15 @@ if st.session_state.step == "login":
             success, msg_or_id, data = login_user(sid_input)
             if success:
                 st.session_state.user_id = msg_or_id
+                
+                # 🚩 登录成功后：根据当前系统时间自动校准学期
+                update_current_semester(msg_or_id)
+                
                 st.session_state.step = "dashboard"
                 st.rerun()
             else:
                 st.error(msg_or_id)
+        
         st.divider()
         if st.button("新同学？点击注册账号", use_container_width=True):
             st.session_state.step = "registration"
@@ -58,7 +64,6 @@ if st.session_state.step == "login":
 elif st.session_state.step == "registration":
     st.title("📝 用户注册")
     
-    # 放置注册表单
     with st.form("registration_form_main"):
         c1, c2 = st.columns(2)
         with c1:
@@ -70,21 +75,26 @@ elif st.session_state.step == "registration":
             major = st.text_input("专业 *", placeholder="如：计算机科学与技术")
             target = st.selectbox("最终目标", ["保研", "出国深造", "本科就业", "考研"])
         
-        sem = st.slider("当前所处学期", 1, 8, 1)
-        
-        # 注册提交按钮
         submit_reg = st.form_submit_button("完成注册并进入系统", type="primary")
         
         if submit_reg:
             if name and sid and major:
                 reg_payload = {
-                    "name": name, "student_id": sid, "enrollment_year": year, 
-                    "school": school, "major": major, "target": target, 
-                    "current_semester": sem
+                    "name": name, 
+                    "student_id": sid, 
+                    "enrollment_year": year, 
+                    "school": school, 
+                    "major": major, 
+                    "target": target, 
+                    "current_semester": 1 # 暂传初始值，下一行代码将自动修正它
                 }
                 success, res = register_user(reg_payload)
                 if success:
                     st.session_state.user_id = res
+                    
+                    # 🚩 核心修改：注册成功后，立即根据“入学年份”和“当前月份”计算真实学期并更新数据库
+                    update_current_semester(res)
+                    
                     st.session_state.step = "dashboard"
                     st.rerun()
                 else:
@@ -92,8 +102,7 @@ elif st.session_state.step == "registration":
             else:
                 st.error("请填写必填项")
 
-    # --- 🚩 新增：在表单外部添加返回按钮 ---
-    st.write("") # 留点间距
+    st.write("") 
     if st.button("已有账号？返回登录", use_container_width=True):
         st.session_state.step = "login"
         st.rerun()

@@ -6,17 +6,22 @@
     },
     {
         "user_name": "一一",
-        "like_count": 2,
+        "like_count": 3,
         "current_rank": 2
     },
     {
         "user_name": "李华",
-        "like_count": 1,
+        "like_count": 2,
         "current_rank": 3
     },
     {
         "user_name": "李华",
         "like_count": 0,
         "current_rank": 4
+    },
+    {
+        "user_name": "王明",
+        "like_count": 0,
+        "current_rank": 5
     }
 ]
