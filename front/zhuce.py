@@ -15,7 +15,7 @@ try:
     from register import (
         register_user, login_user, get_mandatory_roadmap, 
         get_selection_options, update_user_progress, get_db_data,
-        update_current_semester
+        update_current_semester, graduate_warning 
     )
     from recommend import stream_conversation_for_plan 
     # 🚩 新增：导入社交与匹配相关函数
@@ -119,6 +119,39 @@ elif st.session_state.step == "dashboard":
     if not user: st.session_state.step = "login"; st.rerun()
 
     st.title(f"📊 智航看板 - 欢迎您，{user['profile']['name']}")
+# 🚩 2. 核心修改：毕业预警板块展示
+    # 每次渲染页面都实时计算一次预警状态
+    warning_result = graduate_warning(st.session_state.user_id)
+    
+    if warning_result[0]: # 如果返回 [True, must_list, gaps_list]
+        _, must_tasks, credit_gaps = warning_result
+        
+        # 使用警告色容器
+        with st.container(border=True):
+            st.error("🚨 **毕业预警：您的修读进度滞后**")
+            st.write("检测到您已进入毕业年级（第7/8学期），但仍有以下关键项未完成：")
+            
+            col_w1, col_w2 = st.columns(2)
+            with col_w1:
+                st.write("🔴 **待修必修课：**")
+                if must_tasks:
+                    for task in must_tasks:
+                        st.write(f"- {task.get('name')} (建议学期: {task.get('semester')})")
+                else:
+                    st.write("- 无 (必修课已全部修完)")
+            
+            with col_w2:
+                st.write("🟡 **个性化选修/学分缺口：**")
+                # 过滤出真正缺分的项
+                active_gaps = [g for g in credit_gaps if float(g.get("course_gap", 0)) > 0]
+                if active_gaps:
+                    for gap in active_gaps:
+                        st.write(f"- **{gap.get('category')}**: 缺 {gap.get('course_gap')} 门课程")
+                        if gap.get('description'):
+                            st.caption(f"  ({gap.get('description')})")
+                else:
+                    st.write("- 无 (学分要求已满足)")
+        st.divider() # 加一个分割线区分预警和正常看板
     
     # 顶部统计卡片
     col_stat1, col_stat2, col_stat3, col_stat4 = st.columns(4)
