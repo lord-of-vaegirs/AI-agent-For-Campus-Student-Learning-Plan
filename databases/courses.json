@@ -469,7 +469,7 @@
               "name": "开源软件实践",
               "course_introduction": "本课程介绍开源软件的基本概念、开发流程和社区参与方式，培养学生参与开源项目的能力和实践经验",
               "credits": 2,
-              "category": "个性化选修——10计算机类专业实践",
+              "category": "计算机类 -10 计算机类专业实践",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -485,7 +485,7 @@
               "name": "信息安全实践与创新（信息安全竞赛）",
               "course_introduction": "本课程通过信息安全竞赛的形式，培养学生的信息安全实践能力和创新思维",
               "credits": 2,
-              "category": "个性化选修——10计算机类专业实践",
+              "category": "计算机类 -10 计算机类专业实践",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -501,7 +501,7 @@
               "name": "数据科学实践",
               "course_introduction": "本课程通过实际数据科学项目，培养学生的数据处理、分析和可视化能力",
               "credits": 2,
-              "category": "个性化选修——10计算机类专业实践",
+              "category": "计算机类 -10 计算机类专业实践",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -517,7 +517,7 @@
               "name": "数据库系统开发实践",
               "course_introduction": "本课程通过实际数据库系统开发项目，培养学生的数据库设计、实现和优化能力",
               "credits": 2,
-              "category": "个性化选修——10计算机类专业实践",
+              "category": "计算机类 -10 计算机类专业实践",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -533,7 +533,7 @@
               "name": "现代处理器设计",
               "course_introduction": "本课程介绍现代处理器设计的基本原理和方法，涵盖指令集架构、流水线设计、超标量技术等内容",
               "credits": 3,
-              "category": "个性化选修——11复杂工程实践",
+              "category": "计算机类 -11 复杂工程实践",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -549,7 +549,7 @@
               "name": "操作系统内核实现",
               "course_introduction": "本课程通过实际操作系统的内核实现，深入理解操作系统原理和内核开发技术",
               "credits": 3,
-              "category": "个性化选修——11复杂工程实践",
+              "category": "计算机类 -11 复杂工程实践",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -565,7 +565,7 @@
               "name": "人工智能计算系统",
               "course_introduction": "本课程介绍人工智能计算系统的设计与实现，涵盖AI芯片、加速器、异构计算等内容",
               "credits": 3,
-              "category": "个性化选修——11复杂工程实践",
+              "category": "计算机类 -11 复杂工程实践",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -581,7 +581,7 @@
               "name": "运筹学建模与算法",
               "course_introduction": "本课程介绍运筹学的基本模型和算法，涵盖线性规划、整数规划、网络优化等内容",
               "credits": 3,
-              "category": "个性化选修——12计算机理论基础",
+              "category": "计算机类 -12 计算机理论基础",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -597,7 +597,7 @@
               "name": "最优化方法",
               "course_introduction": "本课程介绍最优化理论和方法，涵盖凸优化、非线性规划、梯度下降算法等内容",
               "credits": 3,
-              "category": "个性化选修——12计算机理论基础",
+              "category": "计算机类 -12 计算机理论基础",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -613,7 +613,7 @@
               "name": "图论",
               "course_introduction": "本课程介绍图论的基本概念和算法，涵盖图的表示、遍历、最短路径、最小生成树等内容",
               "credits": 2,
-              "category": "个性化选修——12计算机理论基础",
+              "category": "计算机类 -12 计算机理论基础",
               "standard_semester": 4,
               "knowledge": {
                 "数学基础": 1,
@@ -629,7 +629,7 @@
               "name": "计算学习理论",
               "course_introduction": "本课程介绍计算学习理论的基本概念，涵盖PAC学习、VC维、样本复杂度等内容",
               "credits": 2,
-              "category": "个性化选修——12计算机理论基础",
+              "category": "计算机类 -12 计算机理论基础",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -645,7 +645,7 @@
               "name": "数字逻辑与数字电路",
               "course_introduction": "本课程介绍数字逻辑和数字电路设计的基本原理，涵盖逻辑门、组合电路、时序电路等内容",
               "credits": 2,
-              "category": "个性化选修——13系统与网络",
+              "category": "计算机类 -13 系统与网络",
               "standard_semester": 3,
               "knowledge": {
                 "数学基础": 0,
@@ -661,7 +661,7 @@
               "name": "无线通信技术",
               "course_introduction": "本课程介绍无线通信技术的基本原理和应用，涵盖无线信道、调制解调、多址技术等内容",
               "credits": 2,
-              "category": "个性化选修——13系统与网络",
+              "category": "计算机类 -13 系统与网络",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -677,7 +677,7 @@
               "name": "RUST系统编程实践",
               "course_introduction": "本课程介绍使用RUST语言进行系统级编程的方法和实践",
               "credits": 2,
-              "category": "个性化选修——13系统与网络",
+              "category": "计算机类 -13 系统与网络",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -693,7 +693,7 @@
               "name": "智能数据管理系统",
               "course_introduction": "本课程介绍智能数据管理系统的设计与实现，涵盖数据库优化、查询处理、智能索引等内容",
               "credits": 2,
-              "category": "个性化选修——13系统与网络",
+              "category": "计算机类 -13 系统与网络",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -709,7 +709,7 @@
               "name": "现代通信技术",
               "course_introduction": "本课程介绍现代通信技术的最新发展，涵盖5G/6G、物联网、卫星通信等内容",
               "credits": 2,
-              "category": "个性化选修——13系统与网络",
+              "category": "计算机类 -13 系统与网络",
               "standard_semester": 7,
               "knowledge": {
                 "数学基础": 0,
@@ -725,7 +725,7 @@
               "name": "深度学习应用",
               "course_introduction": "本课程介绍深度学习在实际问题中的应用，涵盖图像识别、自然语言处理、推荐系统等内容",
               "credits": 3,
-              "category": "个性化选修——14人工智能",
+              "category": "计算机类 -14 人工智能",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -741,7 +741,7 @@
               "name": "自然语言处理",
               "course_introduction": "本课程介绍自然语言处理的基本原理和方法，涵盖文本分类、机器翻译、情感分析等内容",
               "credits": 2,
-              "category": "个性化选修——14人工智能",
+              "category": "计算机类 -14 人工智能",
               "standard_semester": 7,
               "knowledge": {
                 "数学基础": 0,
@@ -757,7 +757,7 @@
               "name": "迁移学习",
               "course_introduction": "本课程介绍迁移学习的基本概念和方法，涵盖领域适应、知识蒸馏、元学习等内容",
               "credits": 2,
-              "category": "个性化选修——14人工智能",
+              "category": "计算机类 -14 人工智能",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -773,7 +773,7 @@
               "name": "信息检索导论",
               "course_introduction": "本课程介绍信息检索的基本原理和系统，涵盖搜索引擎、索引技术、排名算法等内容",
               "credits": 2,
-              "category": "个性化选修——14人工智能",
+              "category": "计算机类 -14 人工智能",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -789,7 +789,7 @@
               "name": "机器感知技术",
               "course_introduction": "本课程介绍机器感知技术的基本原理，涵盖计算机视觉、语音识别、传感器融合等内容",
               "credits": 2,
-              "category": "个性化选修——14人工智能",
+              "category": "计算机类 -14 人工智能",
               "standard_semester": 7,
               "knowledge": {
                 "数学基础": 0,
@@ -805,7 +805,7 @@
               "name": "数据治理",
               "course_introduction": "本课程介绍数据治理的基本概念和方法，涵盖数据质量、数据安全、数据生命周期管理等内容",
               "credits": 2,
-              "category": "个性化选修——15大数据技术",
+              "category": "计算机类 -15 大数据技术",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -821,7 +821,7 @@
               "name": "网络舆情与市场",
               "course_introduction": "本课程介绍网络舆情分析和市场研究的基本方法，涵盖数据挖掘、情感分析、市场预测等内容",
               "credits": 2,
-              "category": "个性化选修——15大数据技术",
+              "category": "计算机类 -15 大数据技术",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -837,7 +837,7 @@
               "name": "大数据可视化",
               "course_introduction": "本课程介绍大数据可视化的基本原理和工具，涵盖数据探索、交互式可视化、故事叙述等内容",
               "credits": 2,
-              "category": "个性化选修——15大数据技术",
+              "category": "计算机类 -15 大数据技术",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -853,7 +853,7 @@
               "name": "大数据隐私计算",
               "course_introduction": "本课程介绍大数据隐私计算的基本方法，涵盖差分隐私、联邦学习、安全多方计算等内容",
               "credits": 2,
-              "category": "个性化选修——15大数据技术",
+              "category": "计算机类 -15 大数据技术",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -869,7 +869,7 @@
               "name": "机器学习风险评估与管理",
               "course_introduction": "本课程介绍机器学习系统的风险评估和管理方法，涵盖模型偏差、安全性评估、合规性等内容",
               "credits": 2,
-              "category": "个性化选修——15大数据技术",
+              "category": "计算机类 -15 大数据技术",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -885,7 +885,7 @@
               "name": "多媒体技术",
               "course_introduction": "本课程介绍多媒体技术的基本原理和应用，涵盖音频处理、图像处理、视频编码等内容",
               "credits": 2,
-              "category": "个性化选修——16多媒体技术",
+              "category": "计算机类 -16 多媒体技术",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -901,7 +901,7 @@
               "name": "Spoken Language Processing",
               "course_introduction": "本课程介绍口语语言处理的基本原理和方法，涵盖语音识别、语音合成、对话系统等内容",
               "credits": 2,
-              "category": "个性化选修——16多媒体技术",
+              "category": "计算机类 -16 多媒体技术",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -917,7 +917,7 @@
               "name": "模式识别与计算机视觉",
               "course_introduction": "本课程介绍模式识别和计算机视觉的基本原理，涵盖特征提取、分类算法、目标检测等内容",
               "credits": 2,
-              "category": "个性化选修——16多媒体技术",
+              "category": "计算机类 -16 多媒体技术",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -933,7 +933,7 @@
               "name": "数字信号处理",
               "course_introduction": "本课程介绍数字信号处理的基本原理和方法，涵盖离散傅里叶变换、滤波器设计、信号分析等内容",
               "credits": 3,
-              "category": "个性化选修——16多媒体技术",
+              "category": "计算机类 -16 多媒体技术",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 1,
@@ -1013,7 +1013,7 @@
               "name": "程序设计安全",
               "course_introduction": "本课程介绍程序设计中的安全问题，涵盖缓冲区溢出、代码注入、安全编码规范等内容",
               "credits": 2,
-              "category": "个性化选修——18信息安全技术",
+              "category": "计算机类 -18 信息安全技术",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -1029,7 +1029,7 @@
               "name": "操作系统内核分析与实践",
               "course_introduction": "本课程通过分析操作系统内核，深入理解操作系统安全机制和漏洞利用技术",
               "credits": 2,
-              "category": "个性化选修——18信息安全技术",
+              "category": "计算机类 -18 信息安全技术",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -1045,7 +1045,7 @@
               "name": "Software Quality Assurance",
               "course_introduction": "本课程介绍软件质量保证的基本方法，涵盖测试策略、质量度量、过程改进等内容",
               "credits": 2,
-              "category": "个性化选修——18信息安全技术",
+              "category": "计算机类 -18 信息安全技术",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -1061,7 +1061,7 @@
               "name": "Web安全",
               "course_introduction": "本课程介绍Web安全的基本原理和防护技术，涵盖XSS、CSRF、SQL注入等内容",
               "credits": 2,
-              "category": "个性化选修——18信息安全技术",
+              "category": "计算机类 -18 信息安全技术",
               "standard_semester": 4,
               "knowledge": {
                 "数学基础": 0,
@@ -1077,7 +1077,7 @@
               "name": "区块链原理及实践",
               "course_introduction": "本课程介绍区块链的基本原理和实现技术，涵盖共识算法、智能合约、去中心化应用等内容",
               "credits": 2,
-              "category": "个性化选修——18信息安全技术",
+              "category": "计算机类 -18 信息安全技术",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -1093,7 +1093,7 @@
               "name": "信息内容安全",
               "course_introduction": "本课程介绍信息内容安全的基本原理和技术，涵盖文本过滤、图像识别、舆情监测等内容",
               "credits": 2,
-              "category": "个性化选修——19信息安全应用",
+              "category": "计算机类 -19 信息安全应用",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
@@ -1109,7 +1109,7 @@
               "name": "信息安全管理",
               "course_introduction": "本课程介绍信息安全管理的体系和方法，涵盖风险评估、安全策略、合规管理等内容",
               "credits": 2,
-              "category": "个性化选修——19信息安全应用",
+              "category": "计算机类 -19 信息安全应用",
               "standard_semester": 5,
               "knowledge": {
                 "数学基础": 0,
@@ -1125,7 +1125,7 @@
               "name": "人工智能安全",
               "course_introduction": "本课程介绍人工智能系统的安全问题，涵盖对抗样本、模型窃取、数据投毒等内容",
               "credits": 2,
-              "category": "个性化选修——19信息安全应用",
+              "category": "计算机类 -19 信息安全应用",
               "standard_semester": 6,
               "knowledge": {
                 "数学基础": 0,
