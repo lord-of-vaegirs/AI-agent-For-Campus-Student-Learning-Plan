@@ -46,6 +46,46 @@ st.markdown("""
     .stAlert {
         border-radius: 10px;
     }
+            /* 全局背景设置 */
+    [data-testid="stAppViewContainer"] {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* 浅蓝色科技渐变 */
+        background-attachment: fixed;
+    }
+
+    /* 侧边栏背景（可选） */
+    [data-testid="stSidebar"] {
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px); /* 磨砂玻璃效果 */
+    }
+
+    /* 主容器美化：让内容区带一点白色半透明感，更易阅读 */
+    .main .block-container {
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 20px;
+        padding: 3rem;
+        margin-top: 2rem;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+            /* 定义艺术字类 */
+    .artistic-title {
+        font-family: 'Microsoft YaHei', sans-serif;
+        font-size: 48px !important;
+        font-weight: 800;
+        background: linear-gradient(45deg, #1E88E5, #1565C0, #43A047);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 2px 2px 10px rgba(30, 136, 229, 0.2);
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .artistic-subtitle {
+        font-size: 20px;
+        color: #555;
+        text-align: center;
+        font-style: italic;
+        margin-bottom: 30px;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -59,7 +99,7 @@ if 'comment_version' not in st.session_state: st.session_state.comment_version =
 
 # --- 3. 登录页面 ---
 if st.session_state.step == "login":
-    st.title("🔐 智航 - 登录系统")
+    st.markdown('<p class="artistic-title">✨ 智航学业导航系统</p>', unsafe_allow_html=True)
     col_l, _ = st.columns([1, 2])
     with col_l:
         sid_input = st.text_input("请输入学工号登录", placeholder="10位阿拉伯数字")
@@ -67,6 +107,11 @@ if st.session_state.step == "login":
             success, msg_or_id, data = login_user(sid_input)
             if success:
                 st.session_state.user_id = msg_or_id
+                
+                # 🚩 修改点 1：登录成功后清空旧的匹配结果和聊天记录
+                st.session_state.matched_uids = []
+                st.session_state.messages = []
+
                 update_current_semester(msg_or_id)
                 st.session_state.step = "dashboard"
                 st.rerun()
@@ -80,6 +125,7 @@ if st.session_state.step == "login":
 # --- 4. 注册页面 ---
 elif st.session_state.step == "registration":
     st.title("📝 用户注册")
+    
     with st.form("registration_form_main"):
         c1, c2 = st.columns(2)
         with c1:
@@ -90,20 +136,40 @@ elif st.session_state.step == "registration":
             school = st.selectbox("学院", ["信息学院", "高瓴人工智能学院", "理学院"])
             major = st.text_input("专业 *", placeholder="如：计算机科学与技术")
             target = st.selectbox("最终目标", ["保研", "出国深造", "本科就业", "考研"])
+        
         submit_reg = st.form_submit_button("完成注册并进入系统", type="primary")
+        
         if submit_reg:
             if name and sid and major:
-                reg_payload = {"name": name, "student_id": sid, "enrollment_year": year, "school": school, "major": major, "target": target, "current_semester": 1}
+                reg_payload = {
+                    "name": name, 
+                    "student_id": sid, 
+                    "enrollment_year": year, 
+                    "school": school, 
+                    "major": major, 
+                    "target": target, 
+                    "current_semester": 1 
+                }
                 success, res = register_user(reg_payload)
                 if success:
                     st.session_state.user_id = res
+                    
+                    # 🚩 修改点 2：注册成功后清空旧的匹配结果和聊天记录
+                    st.session_state.matched_uids = []
+                    st.session_state.messages = []
+
                     update_current_semester(res)
-                    st.session_state.step = "dashboard"; st.rerun()
-                else: st.error(res)
-            else: st.error("请填写必填项")
+                    st.session_state.step = "dashboard"
+                    st.rerun()
+                else:
+                    st.error(res)
+            else:
+                st.error("请填写必填项")
+
     st.write("") 
     if st.button("已有账号？返回登录", use_container_width=True):
-        st.session_state.step = "login"; st.rerun()
+        st.session_state.step = "login"
+        st.rerun()
 
 # --- 5. 系统核心主页面 (Dashboard) ---
 elif st.session_state.step == "dashboard":
@@ -115,7 +181,7 @@ elif st.session_state.step == "dashboard":
     user = all_users.get(st.session_state.user_id)
     if not user: st.session_state.step = "login"; st.rerun()
 
-    st.title(f"智航看板 - 欢迎您，{user['profile']['name']}")
+    st.title(f"📊 智航看板 - 欢迎您，{user['profile']['name']}")
     
     # 毕业预警板块
     warning_result = graduate_warning(st.session_state.user_id)
@@ -134,7 +200,7 @@ elif st.session_state.step == "dashboard":
         st.divider()
     
     col_stat1, col_stat2, col_stat3, col_stat4 = st.columns(4)
-    with col_stat1: st.metric("已修总学分", f"{user.get('total_credits', 0.0)} pts", delta_color="normal")
+    with col_stat1: st.metric("已修总学分", f"{user.get('total_credits', 0.0)} pts")
     with col_stat2: st.metric("平均加权绩点 (GPA)", f"{user.get('average_grades', 0.0):.2f}")
     with col_stat3: st.metric("当前学期", f"第 {user['academic_progress']['current_semester']} 学期")
     with col_stat4: 
@@ -149,7 +215,10 @@ elif st.session_state.step == "dashboard":
             st.session_state.step = "recommendation"; st.rerun()
         st.divider()
         if st.button("退出登录", use_container_width=True):
-            st.session_state.step = "login"; st.rerun()
+            # 🚩 修改点 3：退出登录时清空匹配记录
+            st.session_state.matched_uids = []
+            st.session_state.step = "login"
+            st.rerun()
 
     tab_input, tab_tree, tab_radar, tab_map, tab_match, tab_rank = st.tabs([
         "📝 录入成就", "🌲 知识技能树", "🕸️ 能力雷达图", "🗺️ 必修地图", "🤝 路径匹配与复盘", "🏆 荣誉排行榜"
@@ -205,37 +274,23 @@ elif st.session_state.step == "dashboard":
                 if update_user_progress(st.session_state.user_id, final_payload):
                     st.session_state.needs_reset = True; st.success("🎉 更新成功！"); st.rerun()
 
-    # --- 🚩 TAB 2: 知识技能树 (使用美化后的 Plotly) ---
     with tab_tree:
         st.subheader("🌲 知识维度积累分布")
         k_data = user.get('knowledge', {})
         if k_data:
             df_k = pd.DataFrame({"维度": list(k_data.keys()), "分值": list(k_data.values())}).sort_values(by="分值")
-            fig_k = go.Figure(go.Bar(
-                x=df_k["分值"], y=df_k["维度"], orientation='h',
-                marker=dict(color=df_k["分值"], colorscale='Blues', line=dict(color='white', width=1)),
-                text=df_k["分值"], textposition='outside'
-            ))
-            fig_k.update_layout(height=400, margin=dict(l=10, r=40, t=10, b=10), 
-                              xaxis_title="积累得分", yaxis_title=None, plot_bgcolor='rgba(0,0,0,0)')
+            fig_k = go.Figure(go.Bar(x=df_k["分值"], y=df_k["维度"], orientation='h', marker=dict(color=df_k["分值"], colorscale='Blues', line=dict(color='white', width=1)), text=df_k["分值"], textposition='outside'))
+            fig_k.update_layout(height=400, margin=dict(l=10, r=40, t=10, b=10), xaxis_title="积累得分", plot_bgcolor='rgba(0,0,0,0)')
             st.plotly_chart(fig_k, use_container_width=True)
         else: st.info("尚无数据")
 
-    # --- 🚩 TAB 3: 能力雷达图 (精细定制样式) ---
     with tab_radar:
         st.subheader("🕸️ 核心能力模型")
         s_data = user.get('skills', {})
         if s_data:
             categories = list(s_data.keys()); values = list(s_data.values())
-            fig_s = go.Figure(go.Scatterpolar(
-                r=values+[values[0]], theta=categories+[categories[0]], fill='toself',
-                fillcolor='rgba(30, 136, 229, 0.4)', line=dict(color='#1E88E5', width=3),
-                marker=dict(size=8)
-            ))
-            fig_s.update_layout(polar=dict(
-                radialaxis=dict(visible=True, range=[0, max(values)+20 if values else 100], gridcolor="#EEE"),
-                angularaxis=dict(gridcolor="#EEE", tickfont=dict(size=14))
-            ), height=500, margin=dict(l=80, r=80, t=40, b=40), showlegend=False)
+            fig_s = go.Figure(go.Scatterpolar(r=values+[values[0]], theta=categories+[categories[0]], fill='toself', fillcolor='rgba(30, 136, 229, 0.4)', line=dict(color='#1E88E5', width=3)))
+            fig_s.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, max(values)+20 if values else 100], gridcolor="#EEE")), height=500, showlegend=False)
             st.plotly_chart(fig_s, use_container_width=True)
 
     with tab_map:
@@ -273,7 +328,8 @@ elif st.session_state.step == "dashboard":
                 if new_comment_text:
                     if record_comment(st.session_state.user_id, new_comment_text):
                         st.session_state.comment_version += 1; generate_comment_rank_list(); st.success("已存入！"); st.rerun()
-                else: st.warning("内容不能为空")
+                else:
+                    st.warning("内容不能为空")
 
         st.divider()
         st.subheader("🤝 AI 路径匹配")
@@ -281,6 +337,7 @@ elif st.session_state.step == "dashboard":
             with st.spinner("AI 正在分析路径..."):
                 st.session_state.matched_uids = stream_conversation_for_match(st.session_state.user_id)
         
+        # 匹配结果展示逻辑
         if st.session_state.matched_uids:
             c_db = get_db_data("courses.json"); r_db = get_db_data("research.json"); ct_db = get_db_data("contests.json")
             desc_lookup = {}
@@ -323,22 +380,16 @@ elif st.session_state.step == "dashboard":
                             with st.popover(f"Sem {rs['complete_semester']}: {rs['name']}"):
                                 st.write("**项目简介：**"); st.info(desc_lookup.get(rs['name'], "暂无详情"))
 
-    # --- 🚩 TAB 6: 荣誉排行榜 (视觉优化) ---
     with tab_rank:
         st.subheader("🏆 全校路径贡献榜 (Top 30)")
         rank_list = generate_comment_rank_list()
         if rank_list:
             df_rank = pd.DataFrame(rank_list[:30])
-            # 添加勋章图标美化排名
-            df_rank['当前排名'] = df_rank['current_rank'].apply(
-                lambda x: f"🥇 第{x}名" if x==1 else (f"🥈 第{x}名" if x==2 else (f"🥉 第{x}名" if x==3 else f"第{x}名"))
-            )
+            df_rank['当前排名'] = df_rank['current_rank'].apply(lambda x: f"🥇 第{x}名" if x==1 else (f"🥈 第{x}名" if x==2 else (f"🥉 第{x}名" if x==3 else f"第{x}名")))
             df_display = df_rank[['当前排名', 'user_name', 'like_count']]
             df_display.columns = ["荣誉排行", "贡献者姓名", "收获点赞 ❤️"]
-            
-            # 使用 styled dataframe 居中对齐并去掉索引
             st.dataframe(df_display, use_container_width=True, hide_index=True)
-        else: st.info("榜单空空如也，快去发布你的评价吧！")
+        else: st.info("榜单尚未生成。")
 
 # --- 6. 推荐页面 ---
 elif st.session_state.step == "recommendation":
@@ -356,7 +407,7 @@ elif st.session_state.step == "recommendation":
         if st.button("🗑️ 清空历史"): st.session_state.messages = []; st.rerun()
     for message in st.session_state.messages:
         with st.chat_message(message["role"]): st.markdown(message["content"])
-    if prompt := st.chat_input("您可以问我：'根据我的背景，下学期选什么课好？' 或 '推荐一些适合我的科研项目'"):
+    if prompt := st.chat_input("您可以向我咨询规划建议..."):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"): st.markdown(prompt)
         with st.chat_message("assistant"):

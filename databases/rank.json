@@ -5,33 +5,38 @@
         "current_rank": 1
     },
     {
-        "user_name": "一一",
-        "like_count": 3,
+        "user_name": "王明",
+        "like_count": 2,
         "current_rank": 2
     },
     {
-        "user_name": "李华",
-        "like_count": 2,
+        "user_name": "张语欣",
+        "like_count": 1,
         "current_rank": 3
     },
     {
-        "user_name": "王明",
+        "user_name": "陈思润",
         "like_count": 1,
         "current_rank": 4
     },
     {
-        "user_name": "李华",
+        "user_name": "赵严",
         "like_count": 0,
         "current_rank": 5
     },
     {
-        "user_name": "丽丽",
+        "user_name": "周凯",
         "like_count": 0,
         "current_rank": 6
     },
     {
-        "user_name": "王楚",
+        "user_name": "刘全",
         "like_count": 0,
         "current_rank": 7
+    },
+    {
+        "user_name": "周格致",
+        "like_count": 0,
+        "current_rank": 8
     }
 ]
