@@ -25,6 +25,16 @@
           "name": "程序设计",
           "grade": 3.7,
           "semester": 1
+        },
+        {
+          "name": "离散数学A",
+          "grade": 4.0,
+          "semester": 2
+        },
+        {
+          "name": "网络空间安全引论",
+          "grade": 4.0,
+          "semester": 3
         }
       ],
       "research_done": [
@@ -49,17 +59,7 @@
     "remaining_tasks": {
       "must_required_courses": [
         {
-          "name": "高等数学Ⅰ",
-          "semester": 1,
-          "credits": 5
-        },
-        {
           "name": "高等代数Ⅰ",
-          "semester": 1,
-          "credits": 4
-        },
-        {
-          "name": "程序设计",
           "semester": 1,
           "credits": 4
         },
@@ -72,11 +72,6 @@
           "name": "高等代数Ⅱ",
           "semester": 2,
           "credits": 4
-        },
-        {
-          "name": "离散数学A",
-          "semester": 2,
-          "credits": 3
         },
         {
           "name": "概率论与数理统计",
@@ -97,11 +92,6 @@
           "name": "数据科学导论",
           "semester": 3,
           "credits": 3
-        },
-        {
-          "name": "网络空间安全引论",
-          "semester": 3,
-          "credits": 2
         },
         {
           "name": "普通物理B",
@@ -189,26 +179,26 @@
     },
     "path_review": {
       "is_public": true,
-      "content": "2023200001消失",
+      "content": "2023200001诺拆了戳",
       "like_count": 128,
       "current_rank": 1
     },
     "knowledge": {
-      "数学基础": 20.0,
+      "数学基础": 32.0,
       "编程语言、算法与软件工程": 14.8,
       "计算机系统与网络": 0.0,
       "数据与智能": 0.0,
-      "网络安全与信息保护": 0.0
+      "网络安全与信息保护": 8.0
     },
     "skills": {
-      "系统化思维": 8.0,
-      "形式化逻辑与数学迁移": 8.0,
-      "工具化与自动化本能": 7.0,
-      "信息检索与数据处理": 5.0,
-      "异常处理与边界意识": 9.0
+      "系统化思维": 4.0,
+      "形式化逻辑与数学迁移": 3.0,
+      "工具化与自动化本能": 4.0,
+      "信息检索与数据处理": 3.0,
+      "异常处理与边界意识": 5.0
     },
-    "total_credits": 9.0,
-    "average_grades": 3.87
+    "total_credits": 14.0,
+    "average_grades": 3.91
   },
   "user_2022200001": {
     "profile": {
@@ -250,7 +240,7 @@
       "is_public": false,
       "content": "",
       "like_count": 0,
-      "current_rank": 4
+      "current_rank": 5
     },
     "knowledge": {
       "数学基础": 18.5,
@@ -788,8 +778,8 @@
     "path_review": {
       "is_public": false,
       "content": "我是王明",
-      "like_count": 0,
-      "current_rank": 5
+      "like_count": 1,
+      "current_rank": 4
     },
     "knowledge": {
       "数学基础": 47.3,
@@ -986,5 +976,200 @@
     },
     "total_credits": 9.0,
     "average_grades": 3.83
+  },
+  "user_2022201112": {
+    "profile": {
+      "name": "王楚",
+      "enrollment_year": 2022,
+      "school": "信息学院",
+      "major": "计算机科学与技术",
+      "target": "保研"
+    },
+    "academic_progress": {
+      "current_semester": 8,
+      "completed_courses": [
+        {
+          "name": "高等数学Ⅰ",
+          "grade": 3.7,
+          "semester": 1
+        },
+        {
+          "name": "高等代数Ⅰ",
+          "grade": 4.0,
+          "semester": 1
+        },
+        {
+          "name": "普通物理B",
+          "grade": 4.0,
+          "semester": 4
+        },
+        {
+          "name": "数据结构与算法Ⅰ",
+          "grade": 4.0,
+          "semester": 3
+        },
+        {
+          "name": "数据科学导论",
+          "grade": 4.0,
+          "semester": 3
+        },
+        {
+          "name": "网络空间安全引论",
+          "grade": 4.0,
+          "semester": 3
+        },
+        {
+          "name": "计算机系统基础Ⅰ",
+          "grade": 3.3,
+          "semester": 3
+        }
+      ],
+      "research_done": [
+        {
+          "name": "基于朴素贝叶斯的新闻分类器（使用少量新闻数据）",
+          "complete_semester": 2
+        }
+      ],
+      "competitions_done": [
+        {
+          "name": "美国大学生数学建模竞赛 (MCM/ICM)",
+          "award": "Meritorious Winner (一等奖)",
+          "complete_semester": 4
+        },
+        {
+          "name": "CCF大学生计算机系统与程序设计竞赛 (CCSP)",
+          "award": "全国金奖",
+          "complete_semester": 3
+        }
+      ]
+    },
+    "remaining_tasks": {
+      "must_required_courses": [
+        {
+          "name": "程序设计",
+          "semester": 1,
+          "credits": 4
+        },
+        {
+          "name": "高等数学Ⅱ",
+          "semester": 2,
+          "credits": 5
+        },
+        {
+          "name": "高等代数Ⅱ",
+          "semester": 2,
+          "credits": 4
+        },
+        {
+          "name": "离散数学A",
+          "semester": 2,
+          "credits": 3
+        },
+        {
+          "name": "概率论与数理统计",
+          "semester": 3,
+          "credits": 4
+        },
+        {
+          "name": "操作系统",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "数据结构与算法Ⅱ",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "软件工程导论",
+          "semester": 4,
+          "credits": 2
+        },
+        {
+          "name": "机器学习",
+          "semester": 4,
+          "credits": 3
+        },
+        {
+          "name": "并行计算",
+          "semester": 5,
+          "credits": 2
+        },
+        {
+          "name": "数据库系统概论",
+          "semester": 5,
+          "credits": 3
+        },
+        {
+          "name": "计算机网络",
+          "semester": 6,
+          "credits": 3
+        },
+        {
+          "name": "计算理论导论",
+          "semester": 6,
+          "credits": 2
+        },
+        {
+          "name": "编译原理",
+          "semester": 6,
+          "credits": 3
+        }
+      ],
+      "optional_course_gap": [
+        {
+          "category": "计算机类 -10 计算机类专业实践",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -10 计算机类专业实践】中至少选修 1 门课程（《程序设计实践》除外）；"
+        },
+        {
+          "category": "计算机类 -11 复杂工程实践",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -11 复杂工程实践】中至少选修1 门课程。"
+        },
+        {
+          "category": "计算机类 -12 计算机理论基础",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -12 计算机理论基础】中至少选 1 门课；"
+        },
+        {
+          "category": "计算机类 -13 系统与网络",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -13 系统与网络】中至少选 1门课；"
+        },
+        {
+          "category": "计算机类 -14 人工智能 / 计算机类 -15大数据技术 / 计算机类 -16 多媒体技术",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -14 人工智能】【计算机类 -15大数据技术】或【计算机类 -16 多媒体技术】或数据科学与大数据技术专业必修课中至少选修 1 门课程；"
+        },
+        {
+          "category": "计算机类 -18 信息安全技术 / 计算机类 -19 信息安全应用",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -18 信息安全技术】或【计算机类 -19 信息安全应用】或信息安全专业必修课中至少选修 1 门课程。"
+        }
+      ]
+    },
+    "path_review": {
+      "is_public": false,
+      "content": "对于我的路径，我的评价是：",
+      "like_count": 0,
+      "current_rank": 7
+    },
+    "knowledge": {
+      "数学基础": 50.5,
+      "编程语言、算法与软件工程": 16.0,
+      "计算机系统与网络": 9.9,
+      "数据与智能": 12.0,
+      "网络安全与信息保护": 8.0
+    },
+    "skills": {
+      "系统化思维": 11.0,
+      "形式化逻辑与数学迁移": 13.0,
+      "工具化与自动化本能": 9.0,
+      "信息检索与数据处理": 11.0,
+      "异常处理与边界意识": 9.0
+    },
+    "total_credits": 25.0,
+    "average_grades": 3.86
   }
 }
