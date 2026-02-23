@@ -396,7 +396,7 @@
       "is_public": false,
       "content": "保研不仅看GPA，大二下学期的专业课非常吃力，建议一定要提前预习操作系统。科研建议从大二暑假开始联系老师，不要怕被拒绝。",
       "like_count": 1,
-      "current_rank": 3
+      "current_rank": 4
     },
     "knowledge": {
       "数学基础": 105.1,
@@ -623,7 +623,7 @@
     "path_review": {
       "is_public": false,
       "content": "找工作的同学大三上就要开始刷LeetCode了。推荐多选一些大作业比较重的课，GitHub上的项目展示比单纯的成绩单更有说服力。",
-      "like_count": 2,
+      "like_count": 3,
       "current_rank": 2
     },
     "knowledge": {
@@ -822,8 +822,8 @@
     "path_review": {
       "is_public": false,
       "content": "对信安感兴趣的学弟学妹可以多参加CTF比赛。课程方面，《计算机系统基础》是所有安全研究的地基，一定要学透。",
-      "like_count": 1,
-      "current_rank": 4
+      "like_count": 2,
+      "current_rank": 3
     },
     "knowledge": {
       "数学基础": 107.3,
@@ -1016,7 +1016,7 @@
     "path_review": {
       "is_public": false,
       "content": "考研是一场持久战。大三下学期要把数学和英语的基础打牢。如果跨校考研，建议多去目标学校的官网上看他们的培养方案。",
-      "like_count": 0,
+      "like_count": 1,
       "current_rank": 5
     },
     "knowledge": {
@@ -1583,5 +1583,184 @@
     },
     "total_credits": 0.0,
     "average_grades": 0.0
+  },
+  "user_2025001010": {
+    "profile": {
+      "name": "王五",
+      "enrollment_year": 2025,
+      "school": "信息学院",
+      "major": "计算机科学与技术",
+      "target": "保研"
+    },
+    "academic_progress": {
+      "current_semester": 2,
+      "completed_courses": [
+        {
+          "name": "高等数学Ⅰ",
+          "grade": 3.3,
+          "semester": 1
+        },
+        {
+          "name": "高等代数Ⅰ",
+          "grade": 3.7,
+          "semester": 1
+        },
+        {
+          "name": "程序设计",
+          "grade": 4.0,
+          "semester": 1
+        }
+      ],
+      "research_done": [],
+      "competitions_done": []
+    },
+    "remaining_tasks": {
+      "must_required_courses": [
+        {
+          "name": "高等数学Ⅱ",
+          "semester": 2,
+          "credits": 5
+        },
+        {
+          "name": "高等代数Ⅱ",
+          "semester": 2,
+          "credits": 4
+        },
+        {
+          "name": "离散数学A",
+          "semester": 2,
+          "credits": 3
+        },
+        {
+          "name": "概率论与数理统计",
+          "semester": 3,
+          "credits": 4
+        },
+        {
+          "name": "数据结构与算法Ⅰ",
+          "semester": 3,
+          "credits": 4
+        },
+        {
+          "name": "计算机系统基础Ⅰ",
+          "semester": 3,
+          "credits": 3
+        },
+        {
+          "name": "数据科学导论",
+          "semester": 3,
+          "credits": 3
+        },
+        {
+          "name": "网络空间安全引论",
+          "semester": 3,
+          "credits": 2
+        },
+        {
+          "name": "普通物理B",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "操作系统",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "数据结构与算法Ⅱ",
+          "semester": 4,
+          "credits": 4
+        },
+        {
+          "name": "软件工程导论",
+          "semester": 4,
+          "credits": 2
+        },
+        {
+          "name": "机器学习",
+          "semester": 4,
+          "credits": 3
+        },
+        {
+          "name": "并行计算",
+          "semester": 5,
+          "credits": 2
+        },
+        {
+          "name": "数据库系统概论",
+          "semester": 5,
+          "credits": 3
+        },
+        {
+          "name": "计算机网络",
+          "semester": 6,
+          "credits": 3
+        },
+        {
+          "name": "计算理论导论",
+          "semester": 6,
+          "credits": 2
+        },
+        {
+          "name": "编译原理",
+          "semester": 6,
+          "credits": 3
+        }
+      ],
+      "optional_course_gap": [
+        {
+          "category": "计算机类 -10 计算机类专业实践",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -10 计算机类专业实践】中至少选修 1 门课程（《程序设计实践》除外）；"
+        },
+        {
+          "category": "计算机类 -11 复杂工程实践",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -11 复杂工程实践】中至少选修1 门课程。"
+        },
+        {
+          "category": "计算机类 -12 计算机理论基础",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -12 计算机理论基础】中至少选 1 门课；"
+        },
+        {
+          "category": "计算机类 -13 系统与网络",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -13 系统与网络】中至少选 1门课；"
+        },
+        {
+          "category": "计算机类 -14 人工智能 / 计算机类 -15大数据技术 / 计算机类 -16 多媒体技术",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -14 人工智能】【计算机类 -15大数据技术】或【计算机类 -16 多媒体技术】或数据科学与大数据技术专业必修课中至少选修 1 门课程；"
+        },
+        {
+          "category": "计算机类 -18 信息安全技术 / 计算机类 -19 信息安全应用",
+          "course_gap": 1,
+          "description": "在个性化选修课程模块【计算机类 -18 信息安全技术】或【计算机类 -19 信息安全应用】或信息安全专业必修课中至少选修 1 门课程。"
+        }
+      ]
+    },
+    "path_review": {
+      "is_public": false,
+      "content": "",
+      "like_count": 0,
+      "current_rank": 9
+    },
+    "knowledge": {
+      "数学基础": 31.3,
+      "编程语言、算法与软件工程": 16.0,
+      "计算机系统与网络": 0.0,
+      "数据与智能": 0.0,
+      "网络安全与信息保护": 0.0
+    },
+    "skills": {
+      "系统化思维": 0.0,
+      "形式化逻辑与数学迁移": 0.0,
+      "工具化与自动化本能": 0.0,
+      "信息检索与数据处理": 0.0,
+      "异常处理与边界意识": 0.0
+    },
+    "total_credits": 13.0,
+    "average_grades": 3.64
   }
 }

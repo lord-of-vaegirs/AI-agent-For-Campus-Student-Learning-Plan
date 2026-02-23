@@ -181,14 +181,19 @@ elif st.session_state.step == "dashboard":
     user = all_users.get(st.session_state.user_id)
     if not user: st.session_state.step = "login"; st.rerun()
 
-    st.title(f"📊 智航看板 - 欢迎您，{user['profile']['name']}")
-    
+    #st.title(f"智航看板 - 欢迎您，{user['profile']['name']}")
+    st.markdown(f'''
+        <div style="display: flex; align-items: center;">
+            <span style="font-size: 42px; margin-right: 15px;"></span>
+            <h1 class="artistic-title">智航看板 - 欢迎您，{user["profile"]["name"]}</h1>
+        </div>
+    ''', unsafe_allow_html=True)
     # 毕业预警板块
     warning_result = graduate_warning(st.session_state.user_id)
     if warning_result[0]:
         _, must_tasks, credit_gaps = warning_result
         with st.container(border=True):
-            st.error("🚨 **毕业预警：您的修读进度滞后**")
+            st.error("**毕业预警：您的修读进度滞后**")
             cw1, cw2 = st.columns(2)
             with cw1:
                 st.write("🔴 **待修必修课：**")
@@ -211,7 +216,7 @@ elif st.session_state.step == "dashboard":
 
     with st.sidebar:
         st.header("功能中心")
-        if st.button("🤖 开启 AI 智能规划", use_container_width=True, type="primary"):
+        if st.button("开启 AI 智能规划", use_container_width=True, type="primary"):
             st.session_state.step = "recommendation"; st.rerun()
         st.divider()
         if st.button("退出登录", use_container_width=True):
@@ -221,7 +226,7 @@ elif st.session_state.step == "dashboard":
             st.rerun()
 
     tab_input, tab_tree, tab_radar, tab_map, tab_match, tab_rank = st.tabs([
-        "📝 录入成就", "🌲 知识技能树", "🕸️ 能力雷达图", "🗺️ 必修地图", "🤝 路径匹配与复盘", "🏆 荣誉排行榜"
+        "录入成就", "知识技能树", "能力雷达图", "必修地图", "路径匹配与复盘", "荣誉排行榜"
     ])
 
     with tab_input:
@@ -267,7 +272,7 @@ elif st.session_state.step == "dashboard":
             with col2: rs = st.number_input("完成学期", 1, 8, user['academic_progress']['current_semester'], key=f"rs_{n}")
             research_new.append({"name": n, "complete_semester": rs})
 
-        if st.button("🚀 同步数据并更新能力画像", type="primary", use_container_width=True):
+        if st.button("同步数据并更新能力画像", type="primary", use_container_width=True):
             if not course_new and not contest_new and not research_new: st.warning("未检测到新内容。")
             else:
                 final_payload = {"courses": history.get('completed_courses', []) + course_new, "research": history.get('research_done', []) + research_new, "competitions": history.get('competitions_done', []) + contest_new}
@@ -294,7 +299,7 @@ elif st.session_state.step == "dashboard":
             st.plotly_chart(fig_s, use_container_width=True)
 
     with tab_map:
-        st.subheader("🗺️ 专业必修课路线图")
+        st.subheader("专业必修课路线图")
         target_roadmap = []
         courses_db = get_db_data("courses.json")
         for college in courses_db.get("学院列表", []):
@@ -308,7 +313,7 @@ elif st.session_state.step == "dashboard":
             for s in range(1, 9):
                 s_courses = [c for c in target_roadmap if int(c.get('semester', 0)) == s]
                 if s_courses:
-                    st.markdown(f"#### 📅 第 {s} 学期")
+                    st.markdown(f"#### 第 {s} 学期")
                     cols = st.columns(len(s_courses))
                     for i, c in enumerate(s_courses): cols[i].success(f"**{c['name']}**\n\n{c.get('credits', 0)}学分")
         else: st.warning("暂无地图数据。")
@@ -317,12 +322,12 @@ elif st.session_state.step == "dashboard":
         st.subheader("🏁 我的成长复盘")
         path_review = user.get("path_review", {})
         c_p1, c_p2 = st.columns([2, 1])
-        with c_p1: st.info(f"💬 **我的当前路径复盘评价：**\n\n{path_review.get('content', '暂未填写')}")
+        with c_p1: st.info(f"**我的当前路径复盘评价：**\n\n{path_review.get('content', '暂未填写')}")
         with c_p2:
             st.write(f"❤️ 累计获得点赞：**{path_review.get('like_count', 0)}**")
             st.write(f"🏆 当前影响力排名：**No.{path_review.get('current_rank', '-')}**")
 
-        with st.expander("✍️ 撰写/修改我的全路径评价"):
+        with st.expander("撰写/修改我的全路径评价"):
             new_comment_text = st.text_area("分享你的经验指南或心得：", placeholder="在此输入新内容...", height=150, key=f"my_comment_box_{st.session_state.comment_version}")
             if st.button("提交评价"):
                 if new_comment_text:
@@ -332,8 +337,8 @@ elif st.session_state.step == "dashboard":
                     st.warning("内容不能为空")
 
         st.divider()
-        st.subheader("🤝 AI 路径匹配")
-        if st.button("🔍 开始匹配相似路径", type="primary"):
+        st.subheader("AI 路径匹配")
+        if st.button("开始匹配相似路径", type="primary"):
             with st.spinner("AI 正在分析路径..."):
                 st.session_state.matched_uids = stream_conversation_for_match(st.session_state.user_id)
         
@@ -356,7 +361,7 @@ elif st.session_state.step == "dashboard":
                 if not peer: continue
                 with st.container(border=True):
                     header_col, like_col = st.columns([5, 1])
-                    with header_col: st.markdown(f"### 🎯 目标：{peer['profile']['target']} ({peer['profile']['major']})")
+                    with header_col: st.markdown(f"### 目标：{peer['profile']['target']} ({peer['profile']['major']})")
                     with like_col:
                         if st.button(f"👍 {peer.get('path_review', {}).get('like_count', 0)}", key=f"like_{m_uid}"):
                             if add_like(m_uid): st.rerun()
@@ -394,7 +399,7 @@ elif st.session_state.step == "dashboard":
 # --- 6. 推荐页面 ---
 elif st.session_state.step == "recommendation":
     all_users = get_db_data("users.json"); user = all_users.get(st.session_state.user_id)
-    st.title("🤖 AI 智能学业规划导师")
+    st.title("AI 智能学业规划导师")
     st.markdown(f"#### 您好，{user['profile']['name']}！")
     st.markdown(f"""
 我是您的专属学业数字助手。我已经调取了您的**专业培养方案、当前绩点、已点亮的技能树**以及您设定的**{user['profile']['target']}**目标。
@@ -403,15 +408,15 @@ elif st.session_state.step == "recommendation":
 """)
     st.divider()
     with st.sidebar:
-        if st.button("⬅️ 返回主面板"): st.session_state.step = "dashboard"; st.rerun()
-        if st.button("🗑️ 清空历史"): st.session_state.messages = []; st.rerun()
+        if st.button("返回主面板"): st.session_state.step = "dashboard"; st.rerun()
+        if st.button("清空历史"): st.session_state.messages = []; st.rerun()
     for message in st.session_state.messages:
         with st.chat_message(message["role"]): st.markdown(message["content"])
     if prompt := st.chat_input("您可以向我咨询规划建议..."):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"): st.markdown(prompt)
         with st.chat_message("assistant"):
-            status_p = st.empty(); status_p.info("🔍 正在为您规划方案..."); container = {"first": False}
+            status_p = st.empty(); status_p.info("正在为您规划方案..."); container = {"first": False}
             try:
                 res_gen = stream_conversation_for_plan(st.session_state.user_id, prompt)
                 def wrapped():
