@@ -103,7 +103,7 @@ if st.session_state.step == "login":
     col_l, _ = st.columns([1, 2])
     with col_l:
         sid_input = st.text_input("请输入学工号登录", placeholder="10位阿拉伯数字")
-        if st.button("登录", type="primary", use_container_width=True):
+        if st.button("登录", type="primary", width='stretch'):
             success, msg_or_id, data = login_user(sid_input)
             if success:
                 st.session_state.user_id = msg_or_id
@@ -118,7 +118,7 @@ if st.session_state.step == "login":
             else:
                 st.error(msg_or_id)
         st.divider()
-        if st.button("新同学？点击注册账号", use_container_width=True):
+        if st.button("新同学？点击注册账号", width='stretch'):
             st.session_state.step = "registration"
             st.rerun()
 
@@ -167,7 +167,7 @@ elif st.session_state.step == "registration":
                 st.error("请填写必填项")
 
     st.write("") 
-    if st.button("已有账号？返回登录", use_container_width=True):
+    if st.button("已有账号？返回登录", width='stretch'):
         st.session_state.step = "login"
         st.rerun()
 
@@ -216,10 +216,10 @@ elif st.session_state.step == "dashboard":
 
     with st.sidebar:
         st.header("功能中心")
-        if st.button("开启 AI 智能规划", use_container_width=True, type="primary"):
+        if st.button("开启 AI 智能规划", width='stretch', type="primary"):
             st.session_state.step = "recommendation"; st.rerun()
         st.divider()
-        if st.button("退出登录", use_container_width=True):
+        if st.button("退出登录", width='stretch'):
             # 🚩 修改点 3：退出登录时清空匹配记录
             st.session_state.matched_uids = []
             st.session_state.step = "login"
@@ -272,7 +272,7 @@ elif st.session_state.step == "dashboard":
             with col2: rs = st.number_input("完成学期", 1, 8, user['academic_progress']['current_semester'], key=f"rs_{n}")
             research_new.append({"name": n, "complete_semester": rs})
 
-        if st.button("同步数据并更新能力画像", type="primary", use_container_width=True):
+        if st.button("同步数据并更新能力画像", type="primary", width='stretch'):
             if not course_new and not contest_new and not research_new: st.warning("未检测到新内容。")
             else:
                 final_payload = {"courses": history.get('completed_courses', []) + course_new, "research": history.get('research_done', []) + research_new, "competitions": history.get('competitions_done', []) + contest_new}
@@ -286,7 +286,7 @@ elif st.session_state.step == "dashboard":
             df_k = pd.DataFrame({"维度": list(k_data.keys()), "分值": list(k_data.values())}).sort_values(by="分值")
             fig_k = go.Figure(go.Bar(x=df_k["分值"], y=df_k["维度"], orientation='h', marker=dict(color=df_k["分值"], colorscale='Blues', line=dict(color='white', width=1)), text=df_k["分值"], textposition='outside'))
             fig_k.update_layout(height=400, margin=dict(l=10, r=40, t=10, b=10), xaxis_title="积累得分", plot_bgcolor='rgba(0,0,0,0)')
-            st.plotly_chart(fig_k, use_container_width=True)
+            st.plotly_chart(fig_k, width='stretch')
         else: st.info("尚无数据")
 
     with tab_radar:
@@ -296,7 +296,7 @@ elif st.session_state.step == "dashboard":
             categories = list(s_data.keys()); values = list(s_data.values())
             fig_s = go.Figure(go.Scatterpolar(r=values+[values[0]], theta=categories+[categories[0]], fill='toself', fillcolor='rgba(30, 136, 229, 0.4)', line=dict(color='#1E88E5', width=3)))
             fig_s.update_layout(polar=dict(radialaxis=dict(visible=True, range=[0, max(values)+20 if values else 100], gridcolor="#EEE")), height=500, showlegend=False)
-            st.plotly_chart(fig_s, use_container_width=True)
+            st.plotly_chart(fig_s, width='stretch')
 
     with tab_map:
         st.subheader("专业必修课路线图")
@@ -393,7 +393,7 @@ elif st.session_state.step == "dashboard":
             df_rank['当前排名'] = df_rank['current_rank'].apply(lambda x: f"🥇 第{x}名" if x==1 else (f"🥈 第{x}名" if x==2 else (f"🥉 第{x}名" if x==3 else f"第{x}名")))
             df_display = df_rank[['当前排名', 'user_name', 'like_count']]
             df_display.columns = ["荣誉排行", "贡献者姓名", "收获点赞 ❤️"]
-            st.dataframe(df_display, use_container_width=True, hide_index=True)
+            st.dataframe(df_display, width='stretch', hide_index=True)
         else: st.info("榜单尚未生成。")
 
 # --- 6. 推荐页面 ---
