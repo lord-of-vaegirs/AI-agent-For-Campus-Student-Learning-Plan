@@ -1,8 +1,10 @@
 import json
 import os
 import sys
+import streamlit as st
 
-DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
+# DEEPSEEK_API_KEY = os.environ.get("DEEPSEEK_API_KEY", "")
+DEEPSEEK_API_KEY = st.secrets["DEEPSEEK_API_KEY"] if "DEEPSEEK_API_KEY" in st.secrets else os.environ.get("DEEPSEEK_API_KEY", "")
 
 _SESSION_CACHE = {}
 

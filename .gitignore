@@ -2,3 +2,4 @@
 __pycache__/
 test_output/
 learning_plans/
+.streamlit/
