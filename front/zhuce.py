@@ -108,7 +108,7 @@ if st.session_state.step == "login":
             if success:
                 st.session_state.user_id = msg_or_id
                 
-                # 🚩 修改点 1：登录成功后清空旧的匹配结果和聊天记录
+                # 登录成功后清空旧的匹配结果和聊天记录
                 st.session_state.matched_uids = []
                 st.session_state.messages = []
 
@@ -154,7 +154,7 @@ elif st.session_state.step == "registration":
                 if success:
                     st.session_state.user_id = res
                     
-                    # 🚩 修改点 2：注册成功后清空旧的匹配结果和聊天记录
+                    # 注册成功后清空旧的匹配结果和聊天记录
                     st.session_state.matched_uids = []
                     st.session_state.messages = []
 
@@ -220,7 +220,7 @@ elif st.session_state.step == "dashboard":
             st.session_state.step = "recommendation"; st.rerun()
         st.divider()
         if st.button("退出登录", width='stretch'):
-            # 🚩 修改点 3：退出登录时清空匹配记录
+            # 退出登录时清空匹配记录
             st.session_state.matched_uids = []
             st.session_state.step = "login"
             st.rerun()
